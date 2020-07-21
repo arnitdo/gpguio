@@ -14,10 +14,8 @@ What does gpguizero do?
 As of the first commit, nothing.
 
 
-What does it require?
+What hardware does it require?
 Well, a working RPi device. That's it.
-All dependencies are included in the .zip file
-(Thanks to PyInstaller)
 
 
 What is it supposed to do?
