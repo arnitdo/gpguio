@@ -1,6 +1,8 @@
 Dependencies :
 python3, guizero and tkinter
+  
   for tkinter(LINUX ONLY) run - sudo apt install python3-tk
+  
   for guizero(ANY OS) run - pip3 install guizero
 
 
