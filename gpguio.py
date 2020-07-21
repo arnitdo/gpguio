@@ -1,7 +1,9 @@
 import guizero
+import sys
 filewrite = open("script.py", "w")
 filewrite.write("import time\n")
 filewrite.write("import gpiozero\n")
+
 #windows
 mainwindow = guizero.App()
 LEDwindow = guizero.Window(mainwindow)
@@ -11,8 +13,8 @@ def updateLEDname():
     LEDname = LEDnamebox.value
     LEDpinnumber = LEDpinnumberbox.value
     filewrite.write(str(LEDname) + " = LED(" + str(LEDpinnumber) + ")\n")
-    LEDnamebox.clear
-    LEDpinnumberbox.clear
+    LEDnamebox.clear()
+    LEDpinnumberbox.clear()
     LEDwindow.hide()
 
 
@@ -25,11 +27,13 @@ LEDselectexitbutton = guizero.PushButton(LEDwindow, command = LEDwindow.hide, te
 LEDnameconfirmbutton = guizero.PushButton(LEDwindow, command = updateLEDname, text = "Confirm LED selection")
 
 #user input fields
+LEDnametext = guizero.Text(LEDwindow, text="LED name (can be anything)")
 LEDnamebox = guizero.TextBox(LEDwindow)
+LEDpinnumbertext = guizero.Text(LEDwindow, text = "GPIO pin number to which LED is connected")
 LEDpinnumberbox = guizero.TextBox(LEDwindow)
 
 #End of file
 mainwindow.display()
 filewrite.close()
-os.exit()
+sys.exit()
 
