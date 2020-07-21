@@ -1,3 +1,9 @@
+How-to-run:
+Download the gpguio.py file from the repo
+Ensure dependencies are satisfied (see below)
+Run gpguio.py
+
+
 Dependencies :
 python3, guizero and tkinter
   tkinter comes installed with python installations in Windows andd Mac
