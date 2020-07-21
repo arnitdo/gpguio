@@ -1,9 +1,9 @@
 Dependencies :
 python3, guizero and tkinter
-  
+  tkinter comes installed with python installations in Windows andd Mac
   for tkinter(LINUX ONLY) run - sudo apt install python3-tk
   
-  for guizero(ANY OS) run - pip3 install guizero
+  for guizero(ALL OS) run - pip3 install guizero
 
 
 Welcome to gpguio
