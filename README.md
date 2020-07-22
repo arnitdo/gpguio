@@ -1,4 +1,4 @@
-How-to-run:
+**How-to-run:**
 
 Download the gpguio.py file from the repo
 
@@ -7,7 +7,7 @@ Ensure dependencies are satisfied (see below)
 Run gpguio.py
 
 
-Dependencies :
+**Dependencies :**
 
 python3, guizero and tkinter
 
@@ -18,27 +18,27 @@ for tkinter(LINUX ONLY) run - sudo apt install python3-tk
 for guizero(ALL OS) run - pip3 install guizero
 
 
-Welcome to gpguio
+**Welcome to gpguio**
 
 gpguio is a GUI tool for basic GPIO usage
 
 
-What does gpguizero do?
+_What does gpguizero do?_
 
 As of the first commit, nothing.
 
 
-What hardware does it require?
+_What hardware does it require?_
 
 Well, a working RPi device. That's it.
 
 
-What is it supposed to do?
+_What is it supposed to do?_
 
 Get user inputs and pipe relevant python code to a file (script.py)
 
 
-Planned functionality -
+**Planned functionality -**
 
 Basic LED control is a starter.
 
