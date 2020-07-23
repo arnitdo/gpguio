@@ -1,6 +1,6 @@
 **How-to-run:**
 
-Download the gpguio.py file from the repo
+Download the gpguio.py file from the repo or from the release file
 
 Ensure dependencies are satisfied (see below)
 
