@@ -6,45 +6,70 @@ filewrite.write("import time\n")
 filewrite.write("import gpiozero\n")
 
 #windows
-mainwindow = guizero.App(title = "gpguio by arnitdo", width = 960, height = 600)
+mainwindow = guizero.App(title = "gpguio by arnitdo", width = 720, height = 540)
 mainwindow.hide()
-LEDwindow = guizero.Window(mainwindow, width = 960, height = 600, title = "New LED")
+mainwindow.disable()
+LEDwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "New LED")
 LEDwindow.hide()
-PWMLEDwindow = guizero.Window(mainwindow, width = 960, height = 600, title = "New PWM LED")
+LEDwindow.disable()
+PWMLEDwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "New PWM LED")
 PWMLEDwindow.hide()
-Sleepwindow = guizero.Window(mainwindow, width = 960, height = 600, title = "Add Sleep Timer")
+PWMLEDwindow.disable()
+Sleepwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Add Sleep Timer")
 Sleepwindow.hide()
-LEDcontrolwindow = guizero.Window(mainwindow, width = 960, height = 600, title = "LED controls")
+Sleepwindow.disable()
+LEDcontrolwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "LED controls")
 LEDcontrolwindow.hide()
-PWMLEDcontrolwindow = guizero.Window(mainwindow, width = 960, height = 600, title = "PWMLED controls")
+LEDcontrolwindow.disable()
+PWMLEDcontrolwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "PWMLED controls")
 PWMLEDcontrolwindow.hide()
-Buttonwindow  = guizero.Window(mainwindow, width = 960, height = 600, title = "New Button")
+PWMLEDcontrolwindow.disable()
+Buttonwindow  = guizero.Window(mainwindow, width = 720, height = 540, title = "New Button")
 Buttonwindow.hide()
-Buttoncontrolwindow = guizero.Window(mainwindow, width = 960, height = 600, title = "Button controls")
+Buttonwindow.disable()
+Buttoncontrolwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Button controls")
 Buttoncontrolwindow.hide()
-Disclaimerwindow = guizero.Window(mainwindow, width = 960, height = 600, title = "Disclaimer")
+Buttoncontrolwindow.disable()
+#Will add later
+#Printwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Print")
+#Printwindow.hide()
+#ASAP
+Disclaimerwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Disclaimer")
 exitappwindow = guizero.Window(mainwindow, width = 240, height = 120, title = "Exit App")
 exitappwindow.hide()
+exitappwindow.disable()
 
 #Function definitions are in no particular order
 def exitapppopup():
     exitappwindow.show()
 
+def Buttoncontrolconfirmaction():
+    #This is going to be big...turns out not!
+    if Buttoncontrolbuttonselect.value == None or Buttoncontrolbuttonactionselect.value ==None or ButtoncontrolLEDselect.value == None or ButtoncontrolLEDactionselect.value == None:
+        Nobuttonselecttext = guizero.Text(Buttoncontrolwindow, text = "No selection made. Try again")
+    else:
+        if Buttoncontrolbuttonactionselect.value == "when pressed":
+            if ButtoncontrolLEDactionselect.value == "Turn ON":
+                filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_pressed = " + str(ButtoncontrolLEDselect.value) + ".on()\n")
+            elif ButtoncontrolLEDactionselect.value == "Turn OFF":
+                filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_pressed = " + str(ButtoncontrolLEDselect.value) + ".off()\n")
+            else:
+                pass
+        Buttoncontrolwindow.hide()
 def updateButtonname():
     Buttonname = Buttonnamebox.value
     Buttonpinnumber = Buttonpinnumberbox.value
-    if Buttonnamebox.value !="" and Buttonpinnumber.value != "":
+    if Buttonnamebox.value != "" and Buttonpinnumberbox.value != "":
         Buttoncontrolbuttonselect.append(str(Buttonname))
         Buttonnamebox.clear
         Buttonwindow.hide()
         Actionlog.append("Added Button with name " + str(Buttonname) + " at GPIO pin " + str(Buttonpinnumber))
     else:
-        NoButtonwarntext = guizero.Text(Buttonwindow, text = "No input given", align = "top")
+        NoButtonwarntext = guizero.Text(Buttonwindow, text = "Invalid input", align = "top")
 def Buttonwindowexit():
     Buttonnamebox.clear()
     Buttonpinnumberbox.clear()
     Buttonwindow.hide()
-
 
 def LEDwindowexit():
     LEDnamebox.clear()
@@ -52,54 +77,51 @@ def LEDwindowexit():
     LEDwindow.hide()
 
 def updateLEDname():
-    LEDname = LEDnamebox.value
-    LEDpinnumber = LEDpinnumberbox.value
-    if LEDnamebox.value != "" and LEDpinnumberbox.value != "":
-        LEDpowerselect.append(str(LEDname))
-        filewrite.write(str(LEDname) + " = LED(" + str(LEDpinnumber) + ")\n")
+    if LEDnamebox.value != "" and (LEDpinnumberbox.value != "" and int(LEDpinnumberbox.value) > 0 and int(LEDpinnumberbox.value) < 41):
+        LEDpowerselect.append(str(LEDnamebox.value))
+        ButtoncontrolLEDselect.append(str(LEDnamebox.value))
+        filewrite.write(str(LEDnamebox.value) + " = LED(" + str(LEDpinnumberbox.value) + ")\n")
         LEDnamebox.clear()
         LEDpinnumberbox.clear()
         LEDwindow.hide()
-        Actionlog.append("Added LED with name " + str(LEDname) + " at GPIO pin " + str(LEDpinnumber))
+        Actionlog.append("Added LED with name " + str(LEDnamebox.value) + " at GPIO pin " + str(LEDpinnumberbox.value))
     else:
-        NoLEDwarntext = guizero.Text(LEDwindow, text = "No input given", align = "top")
+        NoLEDwarntext = guizero.Text(LEDwindow, text = "Invalid input", align = "top")
 def PWMLEDwindowexit():
     PWMLEDnamebox.clear()
     PWMLEDpinnumberbox.clear()
     PWMLEDwindow.hide()
 
 def updatePWMLEDname():
-    PWMLEDname = PWMLEDnamebox.value
-    PWMLEDpinnumber = PWMLEDpinnumberbox.value
-    if PWMLEDname != "" and PWMLEDpinnumber != "":
-        PWMLEDpowerselect.append(str(PWMLEDname))
-        filewrite.write(str(PWMLEDname) + " = PWMLED(" + str(PWMLEDpinnumber) + ")\n")
+    if PWMLEDnamebox.value != "" and (PWMLEDpinnumberbox.value != "" and int(PWMLEDpinnumberbox.value) < 41 and int(PWMLEDpinnumber.value) > 0):
+        PWMLEDpowerselect.append(str(PWMLEDnamebox.value))
+        filewrite.write(str(PWMLEDnamebox.value) + " = PWMLED(" + str(PWMLEDpinnumberbox.value) + ")\n")
         PWMLEDnamebox.clear()
         PWMLEDpinnumberbox.clear()
         PWMLEDwindow.hide()
-        Actionlog.append("Added PWMLED with name " + str(PWMLEDname) + " at GPIO pin " + str(PWMLEDpinnumber))
+        Actionlog.append("Added PWMLED with name " + str(PWMLEDnamebox.value) + " at GPIO pin " + str(PWMLEDpinnumberbox.value))
     else:
-        NoPWMLEDwarntext = guizero.Text(PWMLEDwindow, text = "No input given", align = "top")
+        NoPWMLEDwarntext = guizero.Text(PWMLEDwindow, text = "Invalid input", align = "top")
 def PWMLEDcontrolbrightness():
-    PWMbrightinput = float(PWMbrightinputbox.value)
     if ((PWMLEDpowerselect.value !=None ) and (PWMbrightinputbox.value != "")):
-        filewrite.write("while True:\n" + "   " + str(PWMLEDpowerselect.value) + ".value = " + str(PWMbrightinput) + "\n")
+        PWMbrightinput = float(PWMbrightinputbox.value)
+        filewrite.write("#Runs for 10 seconds by defaut\npwmsecondcounter = 0\nwhile pwmsecondcounter in range(0,10):\n    pwmsecondcounter = pwmsecondcounter + 1\n    time.sleep(1)\n"+ "    " + str(PWMLEDpowerselect.value) + ".value = " + str(PWMbrightinput) + "\n    #Add more custom code or change the duration of the while() loop if you want")
         #added a permanent while loop. More functionality later :-)
+        Actionlog.append("PWMLED " + str(PWMLEDpowerselect.value) + " brightness set to " + str(PWMbrightinput))
         PWMLEDcontrolwindow.hide()
+    elif PWMLEDpowerselect.value == None:
+        NoLEDselect = guizero.Text(PWMLEDcontrolwindow, text = "Invalid selection", align = "top")
     else:
         pass
-    if PWMLEDpowerselect.value == None:
-        NoLEDselect = guizero.Text(LEDcontrolwindow, text = "No PWMLED selected", align = "top")
-    else:
-        Actionlog.append("PWMLED " + str(PWMLEDpowerselect.value) + " brightness set to " + str(PWMbrightinput))
-
 def updateSleeptime():
-    Sleeptime = Sleeptimebox.value
-    filewrite.write("time.sleep(" + str(Sleeptime) + ")\n" )
-    Sleeptimebox.clear()
-    Sleepwindow.hide()
-    Actionlog.append("Added sleep timer for "+ str(Sleeptime) + " seconds")
-
+    if Sleeptimebox.value != "":
+        Sleeptime = Sleeptimebox.value
+        filewrite.write("time.sleep(" + str(Sleeptime) + ")\n" )
+        Sleeptimebox.clear()
+        Sleepwindow.hide()
+        Actionlog.append("Added sleep timer for "+ str(Sleeptime) + " seconds")
+    else:
+        NoSleepinputtext = guizero.Text(Sleepwindow, text = "Invalid input")
 def Sleeptimeexit():
     Sleeptimebox.clear()
     Sleepwindow.hide()
@@ -111,24 +133,30 @@ def LEDpowerON():
     else:
         pass
     if LEDpowerselect.value == None:
-        NoLEDselect = guizero.Text(LEDcontrolwindow, text = "No LED selected", align = "top")
+        NoLEDselect = guizero.Text(LEDcontrolwindow, text = "Invalid selection", align = "top")
     else:
         Actionlog.append("LED " + str(LEDpowerselect.value) + " will turn ON")
 
 def LEDpowerOFF():
     if LEDpowerselect.value != None:
-        filewrite.write(str(LEDpowerselect.value) + ".on()\n")
+        filewrite.write(str(LEDpowerselect.value) + ".off()\n")
         LEDcontrolwindow.hide()
-    else:
-        pass
-    if LEDpowerselect.value == None:
-        NoLEDselect = guizero.Text(LEDcontrolwindow, text = "No LED selected", align = "top")
-    else:
         Actionlog.append("LED " + str(LEDpowerselect.value) + " will turn OFF")
+    else:
+        NoLEDselect = guizero.Text(LEDcontrolwindow, text = "Invalid selection", align = "top")
 
 def Disclaimeraccept():
     Disclaimerwindow.destroy()
+    mainwindow.enable()
     mainwindow.show()
+    LEDwindow.enable()
+    PWMLEDwindow.enable()
+    LEDcontrolwindow.enable()
+    PWMLEDcontrolwindow.enable()
+    Sleepwindow.enable()
+    Buttonwindow.enable()
+    Buttoncontrolwindow.enable()
+    exitappwindow.enable()
 
 def Disclaimerdecline():
     Disclaimerwindow.destroy()
@@ -152,17 +180,22 @@ Buttonselectexitbutton = guizero.PushButton(Buttonwindow, command = Buttonwindow
 Buttonnameconfirmbutton = guizero.PushButton(Buttonwindow, command = updateButtonname, text = "Confirm", align = "bottom")
 
 #Buttoncontrolwindow
-Buttoncontrolbuttonselect = guizero.ListBox(Buttoncontrolwindow, items = [], scrollbar = True, height = 150, width = 150, align = "left")
-Buttoncontrolactionselect = guizero.ListBox(Buttoncontrolwindow, items = ["TURN LED ON WHEN PRESSED", "TURN LED ON WHILE PRESSED", "TURN LED ON WHEN PRESSED", "TURN LED OFF WHEN PRESSED"], scrollbar = True, height = 150, width = 150, align = "left")
-ButtoncontrolLEDselect = guizero.ListBox(Buttoncontrolwindow, items = [], scrollbar = True, height = 150, width = 150, align = "left")
+Buttoncontrolbuttonselect = guizero.ListBox(Buttoncontrolwindow, items = [], scrollbar = True, height = 100, width = 150, align = "top")
+Buttoncontrolbuttonactionselect = guizero.ListBox(Buttoncontrolwindow, items = ["when pressed", "when released"], scrollbar = True, height = 100, width = 150, align = "top")
+ButtoncontrolLEDselect = guizero.ListBox(Buttoncontrolwindow, items = [], scrollbar = True, height = 100, width = 150, align = "top")
+ButtoncontrolLEDactionselect = guizero.ListBox(Buttoncontrolwindow, items = ["Turn ON", "Turn OFF"], height = 100, width = 150,  align = "top",scrollbar = True)
+Buttoncontrolcancelactionbutton = guizero.PushButton(Buttoncontrolwindow, command = Buttoncontrolwindow.hide, text = "Cancel", padx = 8, align = "bottom")
+Buttoncontrolconfirmactionbutton = guizero.PushButton(Buttoncontrolwindow, command = Buttoncontrolconfirmaction, text = "Confirm", align = "bottom", padx = 5)
+
 #mainwindow
 
 LEDselectbutton = guizero.PushButton(mainwindow, command = LEDwindow.show, text = "New LED", padx = 39)
-PWMLEDselectbutton = guizero.PushButton(mainwindow, command = PWMLEDwindow.show, text = "New PWMLED", padx = 22)
-Sleepwindowbutton = guizero.PushButton(mainwindow, command = Sleepwindow.show, text = "Add Sleep Timer", padx = 14)
 LEDcontrolwindowbutton = guizero.PushButton(mainwindow, command = LEDcontrolwindow.show, text = "LED Controls", padx = 26)
+PWMLEDselectbutton = guizero.PushButton(mainwindow, command = PWMLEDwindow.show, text = "New PWMLED", padx = 22)
 PWMLEDcontrolwindowbutton = guizero.PushButton(mainwindow, command = PWMLEDcontrolwindow.show, text = "PWMLED Controls", padx = 10)
 Buttonwindowbutton = guizero.PushButton(mainwindow, command = Buttonwindow.show, text = "New Button", padx = 30)
+Buttoncontrolwindowbutton = guizero.PushButton(mainwindow, command = Buttoncontrolwindow.show, text = "Button Controls", padx = 17)
+Sleepwindowbutton = guizero.PushButton(mainwindow, command = Sleepwindow.show, text = "Add Sleep Timer", padx = 14)
 mainwindowexitbutton = guizero.PushButton(mainwindow, command = exitapppopup, text = "Save and Quit", align = "top", padx = 22)
 Actionlogtext = guizero.Text(mainwindow, text = "\nLog :")
 Actionlog = guizero.ListBox(mainwindow, items = [], scrollbar = True, height = 150, width = 400)
@@ -176,8 +209,8 @@ PWMLEDselectexitbutton = guizero.PushButton(PWMLEDwindow, command = PWMLEDwindow
 PWMLEDnameconfirmbutton = guizero.PushButton(PWMLEDwindow, command = updatePWMLEDname, text = "Confirm", align = "bottom")
 #Sleepwindow
 
-Sleeptimeconfirmbutton = guizero.PushButton(Sleepwindow, command = updateSleeptime, text = "Confirm Sleep Timer", align ="bottom")
 Sleeptimeexitbutton = guizero.PushButton(Sleepwindow, command = Sleeptimeexit, text = "Cancel", align = "bottom", padx = 55)
+Sleeptimeconfirmbutton = guizero.PushButton(Sleepwindow, command = updateSleeptime, text = "Confirm Sleep Timer", align ="bottom")
 
 #LEDcontrolwindow
 LEDPowertext = guizero.Text(LEDcontrolwindow, text = "Power ON / OFF LEDs.\nSelect LED from dropdown list.\nLEDs must be created first using the \nNew LED option in the main window")
@@ -189,10 +222,10 @@ LEDcontrolwindowexitbutton = guizero.PushButton(LEDcontrolwindow, text = "Cancel
 #PWMLEDcontrolwindow
 PWMLEDPowertext = guizero.Text(PWMLEDcontrolwindow, text = "Control PWM LEDS.\nSelect LED from dropdown list.\nPWMLEDs must be created first using the \nNew PWMLED option in the main window")
 PWMLEDpowerselect = guizero.ListBox(PWMLEDcontrolwindow, items = [], scrollbar = True, height = 150, width = 150)
-PWMLEDbrighttext = guizero.Text(PWMLEDcontrolwindow, text = "Set PWM brightness\nMin value = 0 (OFF)\nMax value = 1 (Full Brightness)\nInput any decimal value from 0 to 1")
+PWMLEDbrighttext = guizero.Text(PWMLEDcontrolwindow, text = "Set PWM brightness\nMin value = 0 (OFF)\nMax value = 1 (Full Brightness)\nInput any decimal value from 0 to 1\nNote: PWMLED brightness time is set to 10 seconds by default\nTo modify it, make necessary changes to the script.py file")
 PWMbrightinputbox = guizero.TextBox(PWMLEDcontrolwindow)
-PWMLEDbrightconfirmbutton = guizero.PushButton(PWMLEDcontrolwindow, command = PWMLEDcontrolbrightness, text = "Confirm")
-PWMLEDcontrolwindowexitbutton = guizero.PushButton(PWMLEDcontrolwindow, text = "Cancel", command = PWMLEDcontrolwindow.hide, align = "top", padx = 15)
+PWMLEDcontrolwindowexitbutton = guizero.PushButton(PWMLEDcontrolwindow, text = "Cancel", command = PWMLEDcontrolwindow.hide, align = "bottom", padx = 15)
+PWMLEDbrightconfirmbutton = guizero.PushButton(PWMLEDcontrolwindow, command = PWMLEDcontrolbrightness, text = "Confirm", align = "bottom")
 
 #user input fields
 
