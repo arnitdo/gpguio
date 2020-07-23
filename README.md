@@ -46,21 +46,37 @@ See **How to run** above
 
 
 **Features**
+
 Add LED devices on a certain GPIO pin
+
 Turn ON / OFF LED devices
+
 Add PWM LED devices on a certain GPIO pin
+
 Change PWM LED device brightness
+
 Add sleep timers
+
 Add buttons.
+
 Interface with LEDs (Non PWM as of now) such as:
-    Turn ON when button is pressed
-    Turn OFF when button is pressed
+
+  Turn ON when button is pressed
+
+  Turn OFF when button is pressed
+
 A log to see which actions made by the user
+
 That is it for now!
 
 **Planned features -**
+
 Buzzer interfacing
+
 PiCamera interfacing
+
 LEDBoard functionality
+
 LEDBarGraph functionality
+
 Full RGB LED functionality
