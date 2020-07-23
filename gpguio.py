@@ -180,12 +180,13 @@ Buttonselectexitbutton = guizero.PushButton(Buttonwindow, command = Buttonwindow
 Buttonnameconfirmbutton = guizero.PushButton(Buttonwindow, command = updateButtonname, text = "Confirm", align = "bottom")
 
 #Buttoncontrolwindow
-Buttoncontrolbuttonselect = guizero.ListBox(Buttoncontrolwindow, items = [], scrollbar = True, height = 100, width = 150, align = "top")
-Buttoncontrolbuttonactionselect = guizero.ListBox(Buttoncontrolwindow, items = ["when pressed", "when released"], scrollbar = True, height = 100, width = 150, align = "top")
-ButtoncontrolLEDselect = guizero.ListBox(Buttoncontrolwindow, items = [], scrollbar = True, height = 100, width = 150, align = "top")
-ButtoncontrolLEDactionselect = guizero.ListBox(Buttoncontrolwindow, items = ["Turn ON", "Turn OFF"], height = 100, width = 150,  align = "top",scrollbar = True)
-Buttoncontrolcancelactionbutton = guizero.PushButton(Buttoncontrolwindow, command = Buttoncontrolwindow.hide, text = "Cancel", padx = 8, align = "bottom")
-Buttoncontrolconfirmactionbutton = guizero.PushButton(Buttoncontrolwindow, command = Buttoncontrolconfirmaction, text = "Confirm", align = "bottom", padx = 5)
+Buttoncontrolhelptext = guizero.Text(Buttoncontrolwindow, text = "Interface with LEDs using Buttons here\nSelect Button from first list\nSelect trigger from second list\nSelect LED to interact with in third list\nSelect LED power option in the fourth list\nNote that Buttons and LEDs need to be created / defined first" )
+Buttoncontrolbuttonselect = guizero.ListBox(Buttoncontrolwindow, items = [], scrollbar = True, height = 75, width = 150, align = "top")
+Buttoncontrolbuttonactionselect = guizero.ListBox(Buttoncontrolwindow, items = ["when pressed", "when released"], scrollbar = True, height = 75, width = 150, align = "top")
+ButtoncontrolLEDselect = guizero.ListBox(Buttoncontrolwindow, items = [], scrollbar = True, height = 75, width = 150, align = "top")
+ButtoncontrolLEDactionselect = guizero.ListBox(Buttoncontrolwindow, items = ["Turn ON", "Turn OFF"], height = 75, width = 150,  align = "top",scrollbar = True)
+Buttoncontrolcancelactionbutton = guizero.PushButton(Buttoncontrolwindow, command = Buttoncontrolwindow.hide, text = "Cancel", padx = 10, align = "bottom")
+Buttoncontrolconfirmactionbutton = guizero.PushButton(Buttoncontrolwindow, command = Buttoncontrolconfirmaction, text = "Confirm", align = "bottom", padx = 6)
 
 #mainwindow
 
