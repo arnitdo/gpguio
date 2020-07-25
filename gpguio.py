@@ -3,7 +3,8 @@ import sys
 import time
 filewrite = open("script.py", "w")
 filewrite.write("import time\n")
-filewrite.write("import gpiozero\n")
+filewrite.write("from gpiozero import *\n") #Not pep8 compliant. alternatively can add gpiozero.<component> = <componenttype>(<pinnumber>)
+#But I feel that importing * is better  due to large amounts of component functions that are going to be added
 
 #windows
 mainwindow = guizero.App(title = "gpguio by arnitdo", width = 720, height = 540)
@@ -81,10 +82,10 @@ def updateLEDname():
         LEDpowerselect.append(str(LEDnamebox.value))
         ButtoncontrolLEDselect.append(str(LEDnamebox.value))
         filewrite.write(str(LEDnamebox.value) + " = LED(" + str(LEDpinnumberbox.value) + ")\n")
+        Actionlog.append("Added LED with name " + str(LEDnamebox.value) + " at GPIO pin " + str(LEDpinnumberbox.value))
         LEDnamebox.clear()
         LEDpinnumberbox.clear()
         LEDwindow.hide()
-        Actionlog.append("Added LED with name " + str(LEDnamebox.value) + " at GPIO pin " + str(LEDpinnumberbox.value))
     else:
         NoLEDwarntext = guizero.Text(LEDwindow, text = "Invalid input", align = "top")
 def PWMLEDwindowexit():
@@ -93,13 +94,13 @@ def PWMLEDwindowexit():
     PWMLEDwindow.hide()
 
 def updatePWMLEDname():
-    if PWMLEDnamebox.value != "" and (PWMLEDpinnumberbox.value != "" and int(PWMLEDpinnumberbox.value) < 41 and int(PWMLEDpinnumber.value) > 0):
+    if PWMLEDnamebox.value != "" and (PWMLEDpinnumberbox.value != "" and int(PWMLEDpinnumberbox.value) < 41 and int(PWMLEDpinnumberbox.value) > 0):
         PWMLEDpowerselect.append(str(PWMLEDnamebox.value))
         filewrite.write(str(PWMLEDnamebox.value) + " = PWMLED(" + str(PWMLEDpinnumberbox.value) + ")\n")
+        Actionlog.append("Added PWMLED with name " + str(PWMLEDnamebox.value) + " at GPIO pin " + str(PWMLEDpinnumberbox.value))
         PWMLEDnamebox.clear()
         PWMLEDpinnumberbox.clear()
         PWMLEDwindow.hide()
-        Actionlog.append("Added PWMLED with name " + str(PWMLEDnamebox.value) + " at GPIO pin " + str(PWMLEDpinnumberbox.value))
     else:
         NoPWMLEDwarntext = guizero.Text(PWMLEDwindow, text = "Invalid input", align = "top")
 def PWMLEDcontrolbrightness():
