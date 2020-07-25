@@ -31,10 +31,19 @@ Buttonwindow.disable()
 Buttoncontrolwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Button controls")
 Buttoncontrolwindow.hide()
 Buttoncontrolwindow.disable()
-#Will add later
-#Printwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Print")
-#Printwindow.hide()
-#ASAP
+Morecomponentswindow = guizero.Window(mainwindow, width = 720, height = 540, title = "More Components")
+Morecomponentswindow.hide()
+SenseHATwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Configure SenseHAT")
+SenseHATwindow.hide()
+SenseHATmatrixwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Configure SenseHAT LED matrix")
+SenseHATmatrixwindow.hide()
+SenseHATmatrixtextwindow = guizero.Window(mainwindow, width = 720, height =  540, title = "Configure SenseHAT matrix text")
+SenseHATmatrixtextwindow.hide()
+SenseHATmatrixcustomimagewindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Configure SenseHAT matrix custom image")
+SenseHATmatrixcustomimagewindow.hide()
+#Holy cow these window names are getting big!
+SenseHATsensorwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Configure SenseHAT sensors")
+SenseHATsensorwindow.hide()
 Disclaimerwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Disclaimer")
 exitappwindow = guizero.Window(mainwindow, width = 240, height = 120, title = "Exit App")
 exitappwindow.hide()
@@ -43,6 +52,15 @@ exitappwindow.disable()
 #Function definitions are in no particular order
 def exitapppopup():
     exitappwindow.show()
+
+def SenseHATtextvflip():
+    filewrite.append("SenseHAT.flip_v()")
+
+def SenseHATtexthflip():
+    filewrite.append("SenseHAT.flip_h()")
+
+def Donothing():
+    pass
 
 def Buttoncontrolconfirmaction():
     #This is going to be big...turns out not!
@@ -132,6 +150,7 @@ def updateSleeptime():
         filewrite.write("time.sleep(" + str(Sleeptime) + ")\n" )
         Sleeptimebox.clear()
         Sleepwindow.hide()
+        Morecomponentswindow.hide()
         Actionlog.append("Added sleep timer for "+ str(Sleeptime) + " seconds")
     else:
         NoSleepinputtext = guizero.Text(Sleepwindow, text = "Invalid input")
@@ -209,10 +228,15 @@ PWMLEDselectbutton = guizero.PushButton(mainwindow, command = PWMLEDwindow.show,
 PWMLEDcontrolwindowbutton = guizero.PushButton(mainwindow, command = PWMLEDcontrolwindow.show, text = "PWMLED Controls", padx = 10)
 Buttonwindowbutton = guizero.PushButton(mainwindow, command = Buttonwindow.show, text = "New Button", padx = 30)
 Buttoncontrolwindowbutton = guizero.PushButton(mainwindow, command = Buttoncontrolwindow.show, text = "Button Controls", padx = 17)
-Sleepwindowbutton = guizero.PushButton(mainwindow, command = Sleepwindow.show, text = "Add Sleep Timer", padx = 14)
+Morecomponentswindowbutton = guizero.PushButton(mainwindow, command = Morecomponentswindow.show, text = "More Components", padx = 8)
 mainwindowexitbutton = guizero.PushButton(mainwindow, command = exitapppopup, text = "Save and Quit", align = "top", padx = 22)
 Actionlogtext = guizero.Text(mainwindow, text = "\nLog :")
 Actionlog = guizero.ListBox(mainwindow, items = [], scrollbar = True, height = 150, width = 400)
+
+#Morecomponentswindow
+Sleepwindowbutton = guizero.PushButton(Morecomponentswindow, command = Sleepwindow.show, text = "Add Sleep Timer", padx = 14)
+SenseHATwindowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHATwindow.show, text = "Configure SenseHAT", padx = 1)
+Morecomponentswindowcancelbutton = guizero.PushButton(Morecomponentswindow, command = Morecomponentswindow.hide, text = "Cancel", padx = 46)
 #LEDwindow
 
 LEDselectexitbutton = guizero.PushButton(LEDwindow, command = LEDwindowexit, text = "Cancel", align = "bottom", padx = 14)
@@ -241,18 +265,40 @@ PWMbrightinputbox = guizero.TextBox(PWMLEDcontrolwindow)
 PWMLEDcontrolwindowexitbutton = guizero.PushButton(PWMLEDcontrolwindow, text = "Cancel", command = PWMLEDcontrolwindow.hide, align = "bottom", padx = 15)
 PWMLEDbrightconfirmbutton = guizero.PushButton(PWMLEDcontrolwindow, command = PWMLEDcontrolbrightness, text = "Confirm", align = "bottom")
 
-#user input fields
+#SenseHATwindow
+SenseHATgeneraltext = guizero.Text(SenseHATwindow, text = "The SenseHAT is divided into two parts - \n1)The SenseHAT LED matrix\n2)The SenseHAT sensors")
+SenseHATmatrixtextwindowbutton = guizero.PushButton(SenseHATwindow, command = SenseHATmatrixtextwindow.show ,text = "Configure LED matrix text", padx = 37)
+SenseHATmatrixtextwindowbutton = guizero.PushButton(SenseHATwindow, command = SenseHATmatrixcustomimagewindow.show ,text = "Configure LED matrix custom image", padx = 4)
+SenseHATsensorwindowbutton = guizero.PushButton(SenseHATwindow, command = SenseHATsensorwindow.show ,text = "Configure sensors", padx = 63)
+SenseHATwindowcancelbutton = guizero.PushButton(SenseHATwindow, command = SenseHATwindow.hide, text =  "Cancel", padx = 99)
+#SenseHATmatrixtextwindow
+SenseHATmatrixtextwindowrotationtext = guizero.Text(SenseHATmatrixtextwindow, text =  "Set SenseHAT rotation value\nAccepted values are 0, 90, 180 and 270")
+SenseHATmatrixtextwindowvflip = guizero.CheckBox(SenseHATmatrixtextwindow, text = "Flip text vertically", command=SenseHATtextvflip)
+SenseHATmatrixtextwindowhflip = guizero.CheckBox(SenseHATmatrixtextwindow, text = "Flip text horizontally", command=SenseHATtexthflip)
 
+#SenseHATmatrixcustomimagewindow
+
+#SenseHATsensorwindow
+
+#user input fields
+#LEDwindowboxes
 LEDnametext = guizero.Text(LEDwindow, text="\nLED name (can be anything reasonable)")
 LEDnamebox = guizero.TextBox(LEDwindow)
 LEDpinnumbertext = guizero.Text(LEDwindow, text = "\nPhysical pin number to which LED is connected.\nShould be any number from 1 to 40\nSee pinout.xyz for more info or\nrun command pinout on your raspberry pi")
 LEDpinnumberbox = guizero.TextBox(LEDwindow)
+
+#PWMLEDwindowboxes
 PWMLEDnametext = guizero.Text(PWMLEDwindow, text="\nPWMLED name (can be anything reasonable)")
 PWMLEDnamebox = guizero.TextBox(PWMLEDwindow)
 PWMLEDpinnumbertext = guizero.Text(PWMLEDwindow, text = "\nPhysical pin number to which PWMLED is connected.\nShould be any number from 1 to 40\nSee pinout.xyz for more info or\nrun command pinout on your raspberry pi")
 PWMLEDpinnumberbox = guizero.TextBox(PWMLEDwindow)
+
+#Sleepwindowboxes
 Sleeptimetext = guizero.Text(Sleepwindow, text = "\nSleep time (in seconds)")
 Sleeptimebox = guizero.TextBox(Sleepwindow)
+
+#SenseHATmatrixwindowboxes
+SenseHATmatrixtextwindowrotationbox = guizero.TextBox(SenseHATmatrixtextwindow, text = "0")
 
 
 #Exit app popup
