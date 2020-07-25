@@ -52,8 +52,19 @@ def Buttoncontrolconfirmaction():
         if Buttoncontrolbuttonactionselect.value == "when pressed":
             if ButtoncontrolLEDactionselect.value == "Turn ON":
                 filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_pressed = " + str(ButtoncontrolLEDselect.value) + ".on()\n")
+                Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn ON when button " + str(Buttoncontrolbuttonselect.value) + " is pressed")
             elif ButtoncontrolLEDactionselect.value == "Turn OFF":
                 filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_pressed = " + str(ButtoncontrolLEDselect.value) + ".off()\n")
+                Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn OFF when button " + str(Buttoncontrolbuttonselect.value) + " is pressed")
+            else:
+                pass
+        elif Buttoncontrolbuttonactionselect.value == "when released":
+            if ButtoncontrolLEDactionselect.value == "Turn ON":
+                filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_released = " + str(ButtoncontrolLEDselect.value) + ".on()\n")
+                Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn ON when button " + str(Buttoncontrolbuttonselect.value) + " is released")
+            elif ButtoncontrolLEDactionselect.value == "Turn OFF":
+                filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_released = " + str(ButtoncontrolLEDselect.value) + ".off()\n")
+                Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn OFF when button " + str(Buttoncontrolbuttonselect.value) + " is released")
             else:
                 pass
         Buttoncontrolwindow.hide()
@@ -62,7 +73,8 @@ def updateButtonname():
     Buttonpinnumber = Buttonpinnumberbox.value
     if Buttonnamebox.value != "" and Buttonpinnumberbox.value != "":
         Buttoncontrolbuttonselect.append(str(Buttonname))
-        Buttonnamebox.clear
+        Buttonnamebox.clear()
+        Buttonpinnumberbox.clear()
         Buttonwindow.hide()
         Actionlog.append("Added Button with name " + str(Buttonname) + " at GPIO pin " + str(Buttonpinnumber))
     else:
