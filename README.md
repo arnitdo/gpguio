@@ -65,11 +65,15 @@ Interface with LEDs (Non PWM as of now) such as:
 
   Turn OFF when button is pressed
 
+Display Custom Text on SenseHat
+
 A log to see which actions made by the user
 
 That is it for now!
 
 **Planned features -**
+
+SenseHAT custom images
 
 Buzzer interfacing
 
@@ -80,3 +84,16 @@ LEDBoard functionality
 LEDBarGraph functionality
 
 Full RGB LED functionality
+
+
+**Interface images, for those interested**
+
+![Basic Interface](https://user-images.githubusercontent.com/68515826/88478558-163e8a80-cf67-11ea-9bbf-268ca0fe1b36.png)
+
+![LED window](https://user-images.githubusercontent.com/68515826/88478651-b1cffb00-cf67-11ea-83a5-56776dce61ea.png)
+
+![PWM LED controls](https://user-images.githubusercontent.com/68515826/88478672-d88e3180-cf67-11ea-9d16-0adc9768e144.png)
+
+![SenseHat Custom Text](https://user-images.githubusercontent.com/68515826/88478724-3589e780-cf68-11ea-8a34-a34414ce262d.png)
+
+And much more!
