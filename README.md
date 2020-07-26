@@ -89,11 +89,11 @@ Full RGB LED functionality
 **Interface images, for those interested**
 
 ![Basic Interface](https://user-images.githubusercontent.com/68515826/88478558-163e8a80-cf67-11ea-9bbf-268ca0fe1b36.png)
-
+The main interface window
 ![LED window](https://user-images.githubusercontent.com/68515826/88478651-b1cffb00-cf67-11ea-83a5-56776dce61ea.png)
-
+The LED creation / definition window
 ![PWM LED controls](https://user-images.githubusercontent.com/68515826/88478672-d88e3180-cf67-11ea-9d16-0adc9768e144.png)
-
+PWM LED brightness control window
 ![SenseHat Custom Text](https://user-images.githubusercontent.com/68515826/88478724-3589e780-cf68-11ea-8a34-a34414ce262d.png)
-
-And much more!
+Custom Text on SenseHat matrix window
+And much more on the way!
