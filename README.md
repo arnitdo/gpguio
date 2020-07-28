@@ -1,3 +1,5 @@
+**Please send feedback in the Feedback and Discussion thread, under issues tab**
+
 **How-to-run:**
 
 Download the gpguio.py file from the repo or from the release file
