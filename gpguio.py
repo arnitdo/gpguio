@@ -5,7 +5,10 @@ filewrite = open("script.py", "w")
 filewrite.write("import time\n")
 filewrite.write("from gpiozero import *\n") #Not pep8 compliant. alternatively can add gpiozero.<component> = <componenttype>(<pinnumber>)
 #But I feel that importing * is better  due to large amounts of component functions that are going to be added
+filewrite.write("from sense_hat import SenseHat\n")
 filewrite.write("from picamera import PiCamera\n")
+filewrite.write("sensehat = SenseHat()\n")
+filewrite.write("camera = PiCamera()\n")
 
 #windows
 mainwindow = guizero.App(title = "gpguio by arnitdo", width = 720, height = 540)
@@ -42,6 +45,9 @@ SenseHatmatrixcustomtextwindow.disable()
 SenseHatmatrixcustomiconwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "SenseHat custom icon")
 SenseHatmatrixcustomiconwindow.hide()
 SenseHatmatrixcustomiconwindow.disable()
+Picamerawindow = guizero.Window(mainwindow, width = 720, height = 540, title = "PiCamera Capture")
+Picamerawindow.hide()
+Picamerawindow.disable()
 Disclaimerwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Disclaimer")
 exitappwindow = guizero.Window(mainwindow, width = 240, height = 120, title = "Exit App")
 exitappwindow.hide()
@@ -50,6 +56,17 @@ exitappwindow.disable()
 #Function definitions are in no particular order
 def exitapppopup():
     exitappwindow.show()
+
+def Fileappendcolors():
+    filewrite.write("V = [148, 0, 211]\n")
+    filewrite.write("I = [75, 0 , 130]\n")
+    filewrite.write("B = [0, 0, 255]\n")
+    filewrite.write("G = [0, 255, 0]\n")
+    filewrite.write("Y = [255, 255, 0]\n")
+    filewrite.write("O = [255, 127, 0]\n")
+    filewrite.write("R = [255, 0, 0]\n")
+    filewrite.write("W = [255, 255, 255]\n")
+    filewrite.write("K = [0, 0, 0]\n")
 
 def Buttoncontrolconfirmaction():
     #This is going to be big...turns out not!
@@ -125,8 +142,8 @@ def updatePWMLEDname():
 def PWMLEDcontrolbrightness():
     if ((PWMLEDpowerselect.value !=None ) and (PWMbrightinputbox.value != "")):
         PWMbrightinput = float(PWMbrightinputbox.value)
-        filewrite.write("#Runs for 10 seconds by defaut\npwmsecondcounter = 0\nwhile pwmsecondcounter in range(0,10):\n    pwmsecondcounter = pwmsecondcounter + 1\n    time.sleep(1)\n"+ "    " + str(PWMLEDpowerselect.value) + ".value = " + str(PWMbrightinput) + "\n\n" + str(PWMLEDpowerselect.value) + ".value = 0\n#Add more custom code or change the duration of the while() loop if you want")
-        #added a permanent while loop. More functionality later :-)
+        filewrite.write(str(PWMLEDpowerselect.value) + ".value = " + str(PWMbrightinput) + "\ntime.sleep(10)\n" + str(PWMLEDpowerselect.value) + ".value = 0")
+        #10 second brightness timer. Can be changed by user
         Actionlog.append("PWMLED " + str(PWMLEDpowerselect.value) + " brightness set to " + str(PWMbrightinput))
         PWMLEDcontrolwindow.hide()
     elif PWMLEDpowerselect.value == None:
@@ -181,30 +198,51 @@ def Disclaimeraccept():
     Morecomponentswindow.enable()
     SenseHatmatrixcustomtextwindow.enable()
     SenseHatmatrixcustomiconwindow.enable()
-
+    Picamerawindow.enable()
+    Fileappendcolors()
 
 def Vflipsensematrix():
-    filewrite.write("SenseHat.flip_v()\n")
+    filewrite.write("sensehat.flip_v()\n")
     Actionlog.append("SenseHat matrix display flipped vertically")
     Sensematrixvflippedtext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "SenseHat matrix display flipped vertically")
 
 def Hflipsensematrix():
-    filewrite.write("SenseHat.flip_h()\n")
+    filewrite.write("sensehat.flip_h()\n")
     Actionlog.append("SenseHat matrix display flipped horizontally")
     Sensematrixhflippedtext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "SenseHat matrix display flipped horizontally")
+
+
+def Picameraconfirmcapture():
+    if Picamerawindowfilebox.value != "":
+        filewrite.write("time.sleep(5) # Camera warm up time, is necessary\ncamera.capture(\"" + str(Picamerawindowfilebox.value) + "\")\n")
+        Actionlog.append("PiCamera will capture image " + str(Picamerawindowfilebox.value))
+        Picamerawindowfilebox.clear()
+        Picamerawindow.hide()
+        Morecomponentswindow.hide()
+    else:
+        Invalidimagename = guizero.Text(Picamerawindow, text = "Invalid Input", align = "bottom")
+        Picamerawindowfilebox.clear()
+
+def Picameracancelcapture():
+    Picamerawindowfilebox.clear()
+    Picamerawindow.hide()
 
 def CancelSenseHattext():
     SenseHatmatrixcustomtextbox.clear()
     SenseHatmatrixcustomtextsenserotationbox.clear()
     SenseHatmatrixcustomtextwindow.hide()
+    Morecomponentswindow.hide()
 
 def ConfirmSenseHattext():
-    if SenseHatmatrixcustomtextbox.value != "" and (SenseHatmatrixcustomtextsenserotationbox.value == "0" or SenseHatmatrixcustomtextsenserotationbox.value == "90" or SenseHatmatrixcustomtextsenserotationbox.value == "180" or SenseHatmatrixcustomtextsenserotationbox.value == "270"):
-        filewrite.write("SenseHat.set_rotation(" + str(SenseHatmatrixcustomtextsenserotationbox.value) + ")\n")
-        filewrite.write("SenseHat.show_message(\""+ str(SenseHatmatrixcustomtextbox.value) + "\")\n")
+    validrotationlist = ["0","90","180","270"]
+    if SenseHatmatrixcustomtextbox.value != "" and SenseHatmatrixcustomtextsenserotationbox.value in validrotationlist:
+        filewrite.write("sensehat.set_rotation(" + str(SenseHatmatrixcustomtextsenserotationbox.value) + ")\n")
+        filewrite.write("sensehat.show_message(\""+ str(SenseHatmatrixcustomtextbox.value) + "\")\n")
+        Actionlog.append("SenseHat will be rotated " + str(SenseHatmatrixcustomtextsenserotationbox.value) + " degrees")
         Actionlog.append("SenseHat will display text " + str(SenseHatmatrixcustomtextbox.value))
         SenseHatmatrixcustomtextwindow.hide()
         SenseHatmatrixcustomtextbox.clear()
+        Morecomponentswindow.hide()
     else:
         Invalidcustomtextinputtext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "Invalid Input")
 def Disclaimerdecline():
@@ -251,10 +289,12 @@ Actionlogtext = guizero.Text(mainwindow, text = "\nLog :")
 Actionlog = guizero.ListBox(mainwindow, items = [], scrollbar = True, height = 150, width = 400)
 
 #Morecomponentswindow
-Sleepwindowbutton = guizero.PushButton(Morecomponentswindow, command = Sleepwindow.show, text = "Add Sleep Timer", padx = 14)
+Sleepwindowbutton = guizero.PushButton(Morecomponentswindow, command = Sleepwindow.show, text = "Add Sleep Timer", padx = 30)
 SenseHatmatrixcustomtextwindowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomtextwindow.show, text = "Custom SenseHat Text")
-SenseHatmatrixcustomiconwindowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomiconwindow.show, text = "Custom SenseHat Icon")
-Morecomponentswindowcancelbutton = guizero.PushButton(Morecomponentswindow, command = Morecomponentswindow.hide, text = "Cancel", padx = 45)
+#SenseHatmatrixcustomiconwindowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomiconwindow.show, text = "Custom SenseHat Icon", padx = 11)
+Picamerawindowbutton = guizero.PushButton(Morecomponentswindow, command  = Picamerawindow.show, text = "PiCamera Image Capture", padx = 2)
+Morecomponentswindowcancelbutton = guizero.PushButton(Morecomponentswindow, command = Morecomponentswindow.hide, text = "Cancel", padx = 63)
+
 #LEDwindow
 
 LEDselectexitbutton = guizero.PushButton(LEDwindow, command = LEDwindowexit, text = "Cancel", align = "bottom", padx = 14)
@@ -289,10 +329,16 @@ SenseHatmatrixcustomtextbox = guizero.TextBox(SenseHatmatrixcustomtextwindow)
 SenseHatmatrixcustomtextsenserotationtext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "\nSet SenseHat rotation\nAccepted values 0,90,180 and 270")
 SenseHatmatrixcustomtextsenserotationbox = guizero.TextBox(SenseHatmatrixcustomtextwindow, text = "0")
 SenseHatmatrixcustomtextsensefliptext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "Select whether you want to rotate the displayed text\n")
-SenseHatmatrixcustomtextvflipbutton = guizero.PushButton(SenseHatmatrixcustomtextwindow, command = Vflipsensematrix, text = "Flip text vertically")
+SenseHatmatrixcustomtextvflipbutton = guizero.PushButton(SenseHatmatrixcustomtextwindow, command = Vflipsensematrix, text = "Flip text vertically", padx =18)
 SenseHatmatrixcustomtexthflipbutton = guizero.PushButton(SenseHatmatrixcustomtextwindow, command = Hflipsensematrix, text = "Flip text horizontally")
-SenseHatmatrixcustomtextcancelbutton = guizero.PushButton(SenseHatmatrixcustomtextwindow, command = CancelSenseHattext, text = "Cancel", align = "bottom",padx = 15)
+SenseHatmatrixcustomtextcancelbutton = guizero.PushButton(SenseHatmatrixcustomtextwindow, command = CancelSenseHattext, text = "Cancel", align = "bottom",padx = 14)
 SenseHatmatrixcustomtextconfirmbutton = guizero.PushButton(SenseHatmatrixcustomtextwindow, command = ConfirmSenseHattext, text = "Confirm", align = "bottom")
+
+#Picamerawindowtext
+Picamerawindowtext = guizero.Text(Picamerawindow, text = "Input file name for PiCamera Image Capture\n")
+Picamerawindowconfirmbutton = guizero.PushButton(Picamerawindow, command = Picameracancelcapture, text = "Cancel", padx = 14, align = "bottom")
+Picamerawindowconfirmbutton = guizero.PushButton(Picamerawindow, command = Picameraconfirmcapture, text = "Confirm", align = "bottom")
+
 
 #user input fields
 #LEDwindowboxes
@@ -311,11 +357,18 @@ PWMLEDpinnumberbox = guizero.TextBox(PWMLEDwindow)
 Sleeptimetext = guizero.Text(Sleepwindow, text = "\nSleep time (in seconds)")
 Sleeptimebox = guizero.TextBox(Sleepwindow)
 
-
+#Picamerawindowboxes
+Picamerawindowfilebox = guizero.TextBox(Picamerawindow)
 
 #Exit app popup
 exitappwindowtext = guizero.Text(exitappwindow, text = "Thank you for using gpguio\nFile saved as script.py")
 exitappconfirm = guizero.PushButton(exitappwindow, command = mainwindow.destroy, text = "OK", align = "bottom", padx = 20)
+
+#SenseHatmatrixcustomiconwindowboxes
+SenseHatmatrixcustomiconwindowhelptext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "Input colors to be displayed on matrix\nAvailable color selection :\nFor red [255,0,0] input R\nFor orange [255, 127, 0] input O\n For yellow [255, 255, 0] input Y\nFor green [0, 255, 0] input G\nFor blue [0, 0, 255] input B\nFor indigo [75, 0, 130] input I\nFor violet [148, 0, 211] input V\nFor white [255, 255, 255] input W\nFor black [0, 0, 0] input K\nNote that inputs are case sensitive")
+SenseHatmatrixcustomiconvalidinputslist = ["V", "I", "B", "G", "Y", "O", "R", "W", "K"]
+#SensehatmatrixiconLEDlist = [mled1x1, mled1x2, mled1x3, mled1x4, mled1x5, mled1x6, mled1x7, mled1x8, mled2x1, mled2x2, mled2x3, mled2x4, mled2x5, mled2x6, mled2x7, mled2x8, mled3x1, mled3x2, mled3x3, mled3x4, mled3x5, mled3x6, mled3x7, mled3x8, mled4x1, mled4x2, mled4x3, mled4x4, mled4x5, mled4x6, mled4x7, mled4x8, mled5x1, mled5x2, mled5x3, mled5x4, mled5x5, mled5x6, mled5x7, mled5x8, mled6x1, mled6x2, mled6x3, mled6x4, mled6x5, mled6x6, mled6x7, mled6x8, mled7x1, mled7x2, mled7x3, mled7x4, mled7x5, mled7x6, mled7x7, mled7x8, mled8x1, mled8x2, mled8x3, mled8x4, mled8x5, mled8x6, mled8x7, mled8x8]
+
 #End of file
 
 mainwindow.display()
