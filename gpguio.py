@@ -42,7 +42,7 @@ Morecomponentswindow.hide()
 SenseHatmatrixcustomtextwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "SenseHat custom text")
 SenseHatmatrixcustomtextwindow.hide()
 SenseHatmatrixcustomtextwindow.disable()
-SenseHatmatrixcustomiconwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "SenseHat custom icon")
+SenseHatmatrixcustomiconwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "SenseHat custom icon", layout = "grid")
 SenseHatmatrixcustomiconwindow.hide()
 SenseHatmatrixcustomiconwindow.disable()
 Picamerawindow = guizero.Window(mainwindow, width = 720, height = 540, title = "PiCamera Capture")
@@ -291,7 +291,7 @@ Actionlog = guizero.ListBox(mainwindow, items = [], scrollbar = True, height = 1
 #Morecomponentswindow
 Sleepwindowbutton = guizero.PushButton(Morecomponentswindow, command = Sleepwindow.show, text = "Add Sleep Timer", padx = 30)
 SenseHatmatrixcustomtextwindowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomtextwindow.show, text = "Custom SenseHat Text")
-#SenseHatmatrixcustomiconwindowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomiconwindow.show, text = "Custom SenseHat Icon", padx = 11)
+SenseHatmatrixcustomiconwindowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomiconwindow.show, text = "Custom SenseHat Icon", padx = 11)
 Picamerawindowbutton = guizero.PushButton(Morecomponentswindow, command  = Picamerawindow.show, text = "PiCamera Image Capture", padx = 2)
 Morecomponentswindowcancelbutton = guizero.PushButton(Morecomponentswindow, command = Morecomponentswindow.hide, text = "Cancel", padx = 63)
 
@@ -365,9 +365,94 @@ exitappwindowtext = guizero.Text(exitappwindow, text = "Thank you for using gpgu
 exitappconfirm = guizero.PushButton(exitappwindow, command = mainwindow.destroy, text = "OK", align = "bottom", padx = 20)
 
 #SenseHatmatrixcustomiconwindowboxes
-SenseHatmatrixcustomiconwindowhelptext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "Input colors to be displayed on matrix\nAvailable color selection :\nFor red [255,0,0] input R\nFor orange [255, 127, 0] input O\n For yellow [255, 255, 0] input Y\nFor green [0, 255, 0] input G\nFor blue [0, 0, 255] input B\nFor indigo [75, 0, 130] input I\nFor violet [148, 0, 211] input V\nFor white [255, 255, 255] input W\nFor black [0, 0, 0] input K\nNote that inputs are case sensitive")
+SenseHatmatrixcustomiconwindowhelptext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "Input colors to be displayed on matrix\nAvailable color selection :\nFor red [255,0,0] input R\nFor orange [255, 127, 0] input O\n For yellow [255, 255, 0] input Y\nFor green [0, 255, 0] input G\nFor blue [0, 0, 255] input B\nFor indigo [75, 0, 130] input I\nFor violet [148, 0, 211] input V\nFor white [255, 255, 255] input W\nFor black [0, 0, 0] input K\nNote that inputs are case sensitive", grid = [0,0,10,1])
 SenseHatmatrixcustomiconvalidinputslist = ["V", "I", "B", "G", "Y", "O", "R", "W", "K"]
 #SensehatmatrixiconLEDlist = [mled1x1, mled1x2, mled1x3, mled1x4, mled1x5, mled1x6, mled1x7, mled1x8, mled2x1, mled2x2, mled2x3, mled2x4, mled2x5, mled2x6, mled2x7, mled2x8, mled3x1, mled3x2, mled3x3, mled3x4, mled3x5, mled3x6, mled3x7, mled3x8, mled4x1, mled4x2, mled4x3, mled4x4, mled4x5, mled4x6, mled4x7, mled4x8, mled5x1, mled5x2, mled5x3, mled5x4, mled5x5, mled5x6, mled5x7, mled5x8, mled6x1, mled6x2, mled6x3, mled6x4, mled6x5, mled6x6, mled6x7, mled6x8, mled7x1, mled7x2, mled7x3, mled7x4, mled7x5, mled7x6, mled7x7, mled7x8, mled8x1, mled8x2, mled8x3, mled8x4, mled8x5, mled8x6, mled8x7, mled8x8]
+
+mled1x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,1])
+mled2x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,1])
+mled3x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,1])
+mled4x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,1])
+mled5x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,1])
+mled6x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,1])
+mled7x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,1])
+mled8x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,1])
+mled2x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,2])
+mled2x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,2])
+mled3x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,2])
+mled4x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,2])
+mled5x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,2])
+mled6x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,2])
+mled7x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,2])
+mled8x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,2])
+mled3x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,3])
+mled3x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,3])
+mled3x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,3])
+mled3x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,3])
+mled3x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,3])
+mled3x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,3])
+mled3x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,3])
+mled3x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,3])
+mled4x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,4])
+mled4x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,4])
+mled4x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,4])
+mled4x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,4])
+mled4x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,4])
+mled4x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,4])
+mled4x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,4])
+mled4x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,4])
+mled5x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,5])
+mled5x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,5])
+mled5x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,5])
+mled5x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,5])
+mled5x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,5])
+mled5x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,5])
+mled5x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,5])
+mled5x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,5])
+mled6x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,6])
+mled6x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,6])
+mled6x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,6])
+mled6x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,6])
+mled6x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,6])
+mled6x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,6])
+mled6x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,6])
+mled6x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,6])
+mled7x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,7])
+mled7x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,7])
+mled7x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,7])
+mled7x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,7])
+mled7x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,7])
+mled7x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,7])
+mled7x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,7])
+mled7x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,7])
+mled8x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,8])
+mled8x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,8])
+mled8x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,8])
+mled8x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,8])
+mled8x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,8])
+mled8x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,8])
+mled8x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,8])
+mled8x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,8])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #End of file
 
