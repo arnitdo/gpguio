@@ -4,7 +4,7 @@ import time
 filewrite = open("script.py", "w")
 filewrite.write("import time\n")
 filewrite.write("from gpiozero import *\n") #Not pep8 compliant. alternatively can add gpiozero.<component> = <componenttype>(<pinnumber>)
-#But I feel that importing * is better  due to large amounts of component functions that are going to be added
+#But I feel that importing * is better  due to large amounts of component functions that are going to be added later
 filewrite.write("from sense_hat import SenseHat\n")
 filewrite.write("from picamera import PiCamera\n")
 filewrite.write("sensehat = SenseHat()\n")
@@ -245,6 +245,35 @@ def ConfirmSenseHattext():
         Morecomponentswindow.hide()
     else:
         Invalidcustomtextinputtext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "Invalid Input")
+
+def CancelSenseHaticon():
+    for mled in SenseHarmatrixmledlist:
+        mled.clear()
+    SenseHatmatrixcustomiconwindow.hide()
+
+def ConfirmSenseHaticon():
+    mledscanner = 0
+    for mled in SenseHarmatrixmledlist:
+        if mled.value in SenseHatmatrixcustomiconvalidinputslist:
+            mledscanner = mledscanner + 1
+            if mledscanner == 64:
+                filewrite.write("icon = [\n")
+                filewrite.write("   " + str(mled1x1.value) + ", " + str(mled2x1.value) + ", " + str(mled3x1.value) + ", " + str(mled4x1.value) + ", " + str(mled5x1.value) + ", " + str(mled6x1.value) + ", " + str(mled7x1.value) + ", " + str(mled8x1.value) + ", \n")
+                filewrite.write("   " + str(mled1x2.value) + ", " + str(mled2x2.value) + ", " + str(mled3x2.value) + ", " + str(mled4x2.value) + ", " + str(mled5x2.value) + ", " + str(mled6x2.value) + ", " + str(mled7x2.value) + ", " + str(mled8x2.value) + ", \n")
+                filewrite.write("   " + str(mled1x3.value) + ", " + str(mled2x3.value) + ", " + str(mled3x3.value) + ", " + str(mled4x3.value) + ", " + str(mled5x3.value) + ", " + str(mled6x3.value) + ", " + str(mled7x3.value) + ", " + str(mled8x3.value) + ", \n")
+                filewrite.write("   " + str(mled1x4.value) + ", " + str(mled2x4.value) + ", " + str(mled3x4.value) + ", " + str(mled4x4.value) + ", " + str(mled5x4.value) + ", " + str(mled6x4.value) + ", " + str(mled7x4.value) + ", " + str(mled8x4.value) + ", \n")
+                filewrite.write("   " + str(mled1x5.value) + ", " + str(mled2x5.value) + ", " + str(mled3x5.value) + ", " + str(mled4x5.value) + ", " + str(mled5x5.value) + ", " + str(mled6x5.value) + ", " + str(mled7x5.value) + ", " + str(mled8x5.value) + ", \n")
+                filewrite.write("   " + str(mled1x6.value) + ", " + str(mled2x6.value) + ", " + str(mled3x6.value) + ", " + str(mled4x6.value) + ", " + str(mled5x6.value) + ", " + str(mled6x6.value) + ", " + str(mled7x6.value) + ", " + str(mled8x6.value) + ", \n")
+                filewrite.write("   " + str(mled1x7.value) + ", " + str(mled2x7.value) + ", " + str(mled3x7.value) + ", " + str(mled4x7.value) + ", " + str(mled5x7.value) + ", " + str(mled6x7.value) + ", " + str(mled7x7.value) + ", " + str(mled8x7.value) + ", \n")
+                filewrite.write("   " + str(mled1x8.value) + ", " + str(mled2x8.value) + ", " + str(mled3x8.value) + ", " + str(mled4x8.value) + ", " + str(mled5x8.value) + ", " + str(mled6x8.value) + ", " + str(mled7x8.value) + ", " + str(mled8x8.value) + "\n")
+                filewrite.write("]\n\n")#Double \n for making it pretty!!
+                filewrite.write("sensehat.set_pixels(icon)\n")
+                mled.clear()
+                SenseHatmatrixcustomiconwindow.hide()
+            else:
+                pass
+    else:
+        Invalidiconinputtext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "Invalid Input", grid = [10,12], align = "bottom")
 def Disclaimerdecline():
     Disclaimerwindow.destroy()
     mainwindow.destroy()
@@ -365,94 +394,78 @@ exitappwindowtext = guizero.Text(exitappwindow, text = "Thank you for using gpgu
 exitappconfirm = guizero.PushButton(exitappwindow, command = mainwindow.destroy, text = "OK", align = "bottom", padx = 20)
 
 #SenseHatmatrixcustomiconwindowboxes
-SenseHatmatrixcustomiconwindowhelptext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "Input colors to be displayed on matrix\nAvailable color selection :\nFor red [255,0,0] input R\nFor orange [255, 127, 0] input O\n For yellow [255, 255, 0] input Y\nFor green [0, 255, 0] input G\nFor blue [0, 0, 255] input B\nFor indigo [75, 0, 130] input I\nFor violet [148, 0, 211] input V\nFor white [255, 255, 255] input W\nFor black [0, 0, 0] input K\nNote that inputs are case sensitive", grid = [0,0,10,1])
+#blanktextforcentering = guizero.Text(SenseHatmatrixcustomiconwindow, text = "                                   ", grid = [0,0,1,10])#Because the mled matrix is offset to the left, this should bring it to center
+SenseHatmatrixcustomiconwindowhelptext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "Input colors to be displayed on matrix\nAvailable color selection :\nFor red [255,0,0] input R\nFor orange [255, 127, 0] input O\n For yellow [255, 255, 0] input Y\nFor green [0, 255, 0] input G\nFor blue [0, 0, 255] input B\nFor indigo [75, 0, 130] input I\nFor violet [148, 0, 211] input V\nFor white [255, 255, 255] input W\nFor black [0, 0, 0] input K\nNote that inputs are case sensitive\nThe values you input will reflect on the matrix", align = "top", grid = [1,0,8,1])
 SenseHatmatrixcustomiconvalidinputslist = ["V", "I", "B", "G", "Y", "O", "R", "W", "K"]
-#SensehatmatrixiconLEDlist = [mled1x1, mled1x2, mled1x3, mled1x4, mled1x5, mled1x6, mled1x7, mled1x8, mled2x1, mled2x2, mled2x3, mled2x4, mled2x5, mled2x6, mled2x7, mled2x8, mled3x1, mled3x2, mled3x3, mled3x4, mled3x5, mled3x6, mled3x7, mled3x8, mled4x1, mled4x2, mled4x3, mled4x4, mled4x5, mled4x6, mled4x7, mled4x8, mled5x1, mled5x2, mled5x3, mled5x4, mled5x5, mled5x6, mled5x7, mled5x8, mled6x1, mled6x2, mled6x3, mled6x4, mled6x5, mled6x6, mled6x7, mled6x8, mled7x1, mled7x2, mled7x3, mled7x4, mled7x5, mled7x6, mled7x7, mled7x8, mled8x1, mled8x2, mled8x3, mled8x4, mled8x5, mled8x6, mled8x7, mled8x8]
+#Is there any alternative to this ? If so, please recommend
+mled1x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,1], width = 6, align = "top")
+mled2x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,1], width = 6, align = "top")
+mled3x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,1], width = 6, align = "top")
+mled4x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,1], width = 6, align = "top")
+mled5x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,1], width = 6, align = "top")
+mled6x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,1], width = 6, align = "top")
+mled7x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,1], width = 6, align = "top")
+mled8x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,1], width = 6, align = "top")
+mled1x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,2], width = 6, align = "top")
+mled2x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,2], width = 6, align = "top")
+mled3x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,2], width = 6, align = "top")
+mled4x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,2], width = 6, align = "top")
+mled5x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,2], width = 6, align = "top")
+mled6x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,2], width = 6, align = "top")
+mled7x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,2], width = 6, align = "top")
+mled8x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,2], width = 6, align = "top")
+mled1x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,3], width = 6, align = "top")
+mled2x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,3], width = 6, align = "top")
+mled3x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,3], width = 6, align = "top")
+mled4x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,3], width = 6, align = "top")
+mled5x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,3], width = 6, align = "top")
+mled6x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,3], width = 6, align = "top")
+mled7x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,3], width = 6, align = "top")
+mled8x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,3], width = 6, align = "top")
+mled1x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,4], width = 6, align = "top")
+mled2x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,4], width = 6, align = "top")
+mled3x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,4], width = 6, align = "top")
+mled4x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,4], width = 6, align = "top")
+mled5x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,4], width = 6, align = "top")
+mled6x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,4], width = 6, align = "top")
+mled7x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,4], width = 6, align = "top")
+mled8x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,4], width = 6, align = "top")
+mled1x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,5], width = 6, align = "top")
+mled2x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,5], width = 6, align = "top")
+mled3x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,5], width = 6, align = "top")
+mled4x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,5], width = 6, align = "top")
+mled5x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,5], width = 6, align = "top")
+mled6x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,5], width = 6, align = "top")
+mled7x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,5], width = 6, align = "top")
+mled8x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,5], width = 6, align = "top")
+mled1x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,6], width = 6, align = "top")
+mled2x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,6], width = 6, align = "top")
+mled3x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,6], width = 6, align = "top")
+mled4x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,6], width = 6, align = "top")
+mled5x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,6], width = 6, align = "top")
+mled6x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,6], width = 6, align = "top")
+mled7x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,6], width = 6, align = "top")
+mled8x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,6], width = 6, align = "top")
+mled1x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,7], width = 6, align = "top")
+mled2x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,7], width = 6, align = "top")
+mled3x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,7], width = 6, align = "top")
+mled4x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,7], width = 6, align = "top")
+mled5x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,7], width = 6, align = "top")
+mled6x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,7], width = 6, align = "top")
+mled7x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,7], width = 6, align = "top")
+mled8x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,7], width = 6, align = "top")
+mled1x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,8], width = 6, align = "top")
+mled2x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,8], width = 6, align = "top")
+mled3x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,8], width = 6, align = "top")
+mled4x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,8], width = 6, align = "top")
+mled5x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,8], width = 6, align = "top")
+mled6x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,8], width = 6, align = "top")
+mled7x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,8], width = 6, align = "top")
+mled8x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,8], width = 6, align = "top")
 
-mled1x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,1])
-mled2x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,1])
-mled3x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,1])
-mled4x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,1])
-mled5x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,1])
-mled6x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,1])
-mled7x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,1])
-mled8x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,1])
-mled2x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,2])
-mled2x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,2])
-mled3x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,2])
-mled4x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,2])
-mled5x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,2])
-mled6x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,2])
-mled7x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,2])
-mled8x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,2])
-mled3x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,3])
-mled3x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,3])
-mled3x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,3])
-mled3x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,3])
-mled3x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,3])
-mled3x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,3])
-mled3x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,3])
-mled3x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,3])
-mled4x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,4])
-mled4x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,4])
-mled4x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,4])
-mled4x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,4])
-mled4x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,4])
-mled4x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,4])
-mled4x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,4])
-mled4x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,4])
-mled5x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,5])
-mled5x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,5])
-mled5x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,5])
-mled5x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,5])
-mled5x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,5])
-mled5x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,5])
-mled5x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,5])
-mled5x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,5])
-mled6x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,6])
-mled6x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,6])
-mled6x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,6])
-mled6x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,6])
-mled6x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,6])
-mled6x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,6])
-mled6x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,6])
-mled6x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,6])
-mled7x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,7])
-mled7x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,7])
-mled7x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,7])
-mled7x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,7])
-mled7x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,7])
-mled7x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,7])
-mled7x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,7])
-mled7x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,7])
-mled8x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,8])
-mled8x2 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [2,8])
-mled8x3 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [3,8])
-mled8x4 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [4,8])
-mled8x5 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [5,8])
-mled8x6 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [6,8])
-mled8x7 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [7,8])
-mled8x8 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [8,8])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+SenseHarmatrixmledlist = [mled1x1, mled2x1, mled3x1, mled4x1, mled5x1, mled6x1, mled7x1, mled8x1, mled1x2, mled2x2, mled3x2, mled4x2, mled5x2, mled6x2, mled7x2, mled8x2, mled1x3, mled2x3, mled3x3, mled4x3, mled5x3, mled6x3, mled7x3, mled8x3, mled1x4, mled2x4, mled3x4, mled4x4, mled5x4, mled6x4, mled7x4, mled8x4, mled1x5, mled2x5, mled3x5, mled4x5, mled5x5, mled6x5, mled7x5, mled8x5, mled1x6, mled2x6, mled3x6, mled4x6, mled5x6, mled6x6, mled7x6, mled8x6, mled1x7, mled2x7, mled3x7, mled4x7, mled5x7, mled6x7, mled7x7, mled8x7, mled1x8, mled2x8, mled3x8, mled4x8, mled5x8, mled6x8, mled7x8, mled8x8]
+SenseHatmatrixcustomiconcancelbutton = guizero.PushButton(SenseHatmatrixcustomiconwindow, command = CancelSenseHaticon, text = "Cancel", padx = 14, grid = [4,11,2,1], align = "bottom")
+SenseHatmatrixcustomiconconfirmbutton = guizero.PushButton(SenseHatmatrixcustomiconwindow, command = ConfirmSenseHaticon, text = "Confirm", grid = [4,10,2,1], align = "bottom")
 
 #End of file
 
