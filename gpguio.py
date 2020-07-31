@@ -7,6 +7,7 @@ filewrite.write("from gpiozero import *\n") #Not pep8 compliant. alternatively c
 #But I feel that importing * is better  due to large amounts of component functions that are going to be added later
 filewrite.write("from sense_hat import SenseHat\n")
 filewrite.write("from picamera import PiCamera\n")
+filewrite.write("from signal import pause\n")
 filewrite.write("sensehat = SenseHat()\n")
 filewrite.write("camera = PiCamera()\n")
 
@@ -270,6 +271,7 @@ def ConfirmSenseHaticon():
                 filewrite.write("sensehat.set_pixels(icon)\n")
                 mled.clear()
                 SenseHatmatrixcustomiconwindow.hide()
+                Actionlog.append("SenseHat matrix will display custom icon\n")
             else:
                 pass
     else:
@@ -364,7 +366,7 @@ SenseHatmatrixcustomtextcancelbutton = guizero.PushButton(SenseHatmatrixcustomte
 SenseHatmatrixcustomtextconfirmbutton = guizero.PushButton(SenseHatmatrixcustomtextwindow, command = ConfirmSenseHattext, text = "Confirm", align = "bottom")
 
 #Picamerawindowtext
-Picamerawindowtext = guizero.Text(Picamerawindow, text = "Input file name for PiCamera Image Capture\n")
+Picamerawindowtext = guizero.Text(Picamerawindow, text = "\nInput file name for PiCamera Image Capture\nThis can also be a filepath which includes directories\n")
 Picamerawindowconfirmbutton = guizero.PushButton(Picamerawindow, command = Picameracancelcapture, text = "Cancel", padx = 14, align = "bottom")
 Picamerawindowconfirmbutton = guizero.PushButton(Picamerawindow, command = Picameraconfirmcapture, text = "Confirm", align = "bottom")
 
@@ -387,15 +389,15 @@ Sleeptimetext = guizero.Text(Sleepwindow, text = "\nSleep time (in seconds)")
 Sleeptimebox = guizero.TextBox(Sleepwindow)
 
 #Picamerawindowboxes
-Picamerawindowfilebox = guizero.TextBox(Picamerawindow)
+Picamerawindowfilebox = guizero.TextBox(Picamerawindow, text = "capture.jpg", width = 15)
 
 #Exit app popup
 exitappwindowtext = guizero.Text(exitappwindow, text = "Thank you for using gpguio\nFile saved as script.py")
 exitappconfirm = guizero.PushButton(exitappwindow, command = mainwindow.destroy, text = "OK", align = "bottom", padx = 20)
 
 #SenseHatmatrixcustomiconwindowboxes
-#blanktextforcentering = guizero.Text(SenseHatmatrixcustomiconwindow, text = "                                   ", grid = [0,0,1,10])#Because the mled matrix is offset to the left, this should bring it to center
-SenseHatmatrixcustomiconwindowhelptext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "Input colors to be displayed on matrix\nAvailable color selection :\nFor red [255,0,0] input R\nFor orange [255, 127, 0] input O\n For yellow [255, 255, 0] input Y\nFor green [0, 255, 0] input G\nFor blue [0, 0, 255] input B\nFor indigo [75, 0, 130] input I\nFor violet [148, 0, 211] input V\nFor white [255, 255, 255] input W\nFor black [0, 0, 0] input K\nNote that inputs are case sensitive\nThe values you input will reflect on the matrix", align = "top", grid = [1,0,8,1])
+blanktextforcentering = guizero.Text(SenseHatmatrixcustomiconwindow, text = "                                   ", grid = [0,0,1,10])#Because the mled matrix is offset to the left, this should bring it to center
+SenseHatmatrixcustomiconwindowhelptext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "\nInput colors to be displayed on matrix\nAvailable color selection :\nFor violet [148, 0, 211] input V\nFor indigo [75, 0, 130] input I\nFor blue [0, 0, 255] input B\nFor green [0, 255, 0] input G\nFor yellow [255, 255, 0] input Y\nFor orange [255, 127, 0] input O\nFor red [255,0,0] input R\nFor white [255, 255, 255] input W\nFor black (off) [0, 0, 0] input K\nNote that inputs are case sensitive\nThe values you input will reflect on the matrix\n", align = "top", grid = [1,0,8,1])
 SenseHatmatrixcustomiconvalidinputslist = ["V", "I", "B", "G", "Y", "O", "R", "W", "K"]
 #Is there any alternative to this ? If so, please recommend
 mled1x1 = guizero.TextBox(SenseHatmatrixcustomiconwindow, grid = [1,1], width = 6, align = "top")
@@ -470,5 +472,6 @@ SenseHatmatrixcustomiconconfirmbutton = guizero.PushButton(SenseHatmatrixcustomi
 #End of file
 
 mainwindow.display()
+filewrite.write("pause()\n")
 filewrite.close()
 sys.exit()
