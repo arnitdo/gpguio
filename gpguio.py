@@ -291,10 +291,10 @@ def updateLEDBoard():
         for traverser in LEDBoardselect.value[0 : -1]:
             ledstring = ledstring + traverser + ", "
         ledstring = ledstring + LEDBoardselect.value[-1]
-        #Actionlog.append(ledstring)# Used for debugging, no longer needed
         filewrite.write(str(LEDBoardnamebox.value) + " = LEDBoard(" + ledstring + ")\n") #the string of LED pins is added to the file after LEDBoard = (
         Actionlog.append("Created LEDBoard with LEDs at pins " + str(LEDBoardselect.value))
         ButtoncontrolLEDselect.append(str(LEDBoardnamebox.value))
+        LEDpowerselect.append(str(LEDBoardnamebox.value))
         LEDBoardnamebox.clear()
         LEDBoardwindow.hide()
     else:
