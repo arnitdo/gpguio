@@ -49,6 +49,9 @@ SenseHatmatrixcustomiconwindow.disable()
 Picamerawindow = guizero.Window(mainwindow, width = 720, height = 540, title = "PiCamera Capture")
 Picamerawindow.hide()
 Picamerawindow.disable()
+LEDBoardwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "LED Board")
+LEDBoardwindow.hide()
+LEDBoardwindow.disable()
 Disclaimerwindow = guizero.Window(mainwindow, width = 720, height = 540, title = "Disclaimer")
 exitappwindow = guizero.Window(mainwindow, width = 240, height = 120, title = "Exit App")
 exitappwindow.hide()
@@ -118,6 +121,7 @@ def updateLEDname():
     if LEDnamebox.value != "" and (LEDpinnumberbox.value != "" and int(LEDpinnumberbox.value) > 0 and int(LEDpinnumberbox.value) < 41):
         LEDpowerselect.append(str(LEDnamebox.value))
         ButtoncontrolLEDselect.append(str(LEDnamebox.value))
+        LEDBoardselect.append(str(LEDpinnumberbox.value))
         filewrite.write(str(LEDnamebox.value) + " = LED(" + str(LEDpinnumberbox.value) + ")\n")
         Actionlog.append("Added LED with name " + str(LEDnamebox.value) + " at GPIO pin " + str(LEDpinnumberbox.value))
         LEDnamebox.clear()
@@ -276,6 +280,30 @@ def ConfirmSenseHaticon():
                 pass
     else:
         Invalidiconinputtext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "Invalid Input", grid = [10,12], align = "bottom")
+
+def LEDBoardexit():
+    LEDBoardwindow.hide()
+    LEDBoardnamebox.clear()
+
+def updateLEDBoard():
+    if LEDBoardnamebox.value != "" and LEDBoardselect.value != None:
+        ledstring = "" #Sets the led string to "". each led pin is added to the string
+        for traverser in LEDBoardselect.value[0 : -1]:
+            ledstring = ledstring + traverser + ", "
+        ledstring = ledstring + LEDBoardselect.value[-1]
+        #Actionlog.append(ledstring)# Used for debugging, no longer needed
+        filewrite.write(str(LEDBoardnamebox.value) + " = LEDBoard(" + ledstring + ")\n") #the string of LED pins is added to the file after LEDBoard = (
+        Actionlog.append("Created LEDBoard with LEDs at pins " + str(LEDBoardselect.value))
+        ButtoncontrolLEDselect.append(str(LEDBoardnamebox.value))
+        LEDBoardnamebox.clear()
+        LEDBoardwindow.hide()
+    else:
+        InvalidLEDBoardtext = guizero.Text(LEDBoardwindow, text = "Invalid Input", align = "bottom")
+
+def LEDBoardexit():
+    LEDBoardnamebox.clear()
+    LEDBoardwindow.hide()
+
 def Disclaimerdecline():
     Disclaimerwindow.destroy()
     mainwindow.destroy()
@@ -320,9 +348,10 @@ Actionlogtext = guizero.Text(mainwindow, text = "\nLog :")
 Actionlog = guizero.ListBox(mainwindow, items = [], scrollbar = True, height = 150, width = 400)
 
 #Morecomponentswindow
+LEDBoardwindowbutton =  guizero.PushButton(Morecomponentswindow, command = LEDBoardwindow.show, text = "LED Board", padx = 50)
 Sleepwindowbutton = guizero.PushButton(Morecomponentswindow, command = Sleepwindow.show, text = "Add Sleep Timer", padx = 30)
 SenseHatmatrixcustomtextwindowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomtextwindow.show, text = "Custom SenseHat Text")
-SenseHatmatrixcustomiconwindowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomiconwindow.show, text = "Custom SenseHat Icon", padx = 11)
+SenseHatmatrixcustomiconwindwowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomiconwindow.show, text = "Custom SenseHat Icon", padx = 11)
 Picamerawindowbutton = guizero.PushButton(Morecomponentswindow, command  = Picamerawindow.show, text = "PiCamera Image Capture", padx = 2)
 Morecomponentswindowcancelbutton = guizero.PushButton(Morecomponentswindow, command = Morecomponentswindow.hide, text = "Cancel", padx = 63)
 
@@ -334,6 +363,14 @@ LEDnameconfirmbutton = guizero.PushButton(LEDwindow, command = updateLEDname, te
 #PWM LED WINDOW
 PWMLEDselectexitbutton = guizero.PushButton(PWMLEDwindow, command = PWMLEDwindowexit, text = "Cancel", align = "bottom", padx = 14)
 PWMLEDnameconfirmbutton = guizero.PushButton(PWMLEDwindow, command = updatePWMLEDname, text = "Confirm", align = "bottom")
+
+#LEDBoardwindow
+LEDBoardnametext = guizero.Text(LEDBoardwindow, text = "\nSet the name for the LED Board\nLED Boards can be controlled\nunder LED Controls window\n")
+LEDBoardnamebox = guizero.TextBox(LEDBoardwindow)
+LEDBoardLEDselecttext = guizero.Text(LEDBoardwindow, text = "\nSelect LED pins to add to LED Board\nDefine LEDs in the New LED window\n")
+LEDBoardselect = guizero.ListBox(LEDBoardwindow, multiselect = True, scrollbar = True, items = [])
+LEDBoardexitbutton = guizero.PushButton(LEDBoardwindow, command = LEDBoardexit, text = "Cancel", align = "bottom", padx = 14)
+LEDBoardconfirmbutton = guizero.PushButton(LEDBoardwindow, command = updateLEDBoard, text = "Confirm", align = "bottom")
 #Sleepwindow
 
 Sleeptimeexitbutton = guizero.PushButton(Sleepwindow, command = Sleeptimeexit, text = "Cancel", align = "bottom", padx = 55)
