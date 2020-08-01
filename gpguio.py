@@ -351,7 +351,7 @@ Actionlog = guizero.ListBox(mainwindow, items = [], scrollbar = True, height = 1
 LEDBoardwindowbutton =  guizero.PushButton(Morecomponentswindow, command = LEDBoardwindow.show, text = "LED Board", padx = 50)
 Sleepwindowbutton = guizero.PushButton(Morecomponentswindow, command = Sleepwindow.show, text = "Add Sleep Timer", padx = 30)
 SenseHatmatrixcustomtextwindowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomtextwindow.show, text = "Custom SenseHat Text")
-SenseHatmatrixcustomiconwindwowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomiconwindow.show, text = "Custom SenseHat Icon", padx = 11)
+SenseHatmatrixcustomiconwindowbutton = guizero.PushButton(Morecomponentswindow, command = SenseHatmatrixcustomiconwindow.show, text = "Custom SenseHat Icon", padx = 11)
 Picamerawindowbutton = guizero.PushButton(Morecomponentswindow, command  = Picamerawindow.show, text = "PiCamera Image Capture", padx = 2)
 Morecomponentswindowcancelbutton = guizero.PushButton(Morecomponentswindow, command = Morecomponentswindow.hide, text = "Cancel", padx = 63)
 
