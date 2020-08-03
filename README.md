@@ -22,7 +22,7 @@ python3, guizero and tkinter
 tkinter comes installed with python installations in Windows and Mac (if option selected during installation)
 
 for tkinter(LINUX ONLY) run - sudo apt install python3-tk
-  
+
 for guizero(ALL OS) run - pip3 install guizero
 
 
@@ -33,7 +33,7 @@ gpguio is a GUI tool for basic GPIO usage
 
 _What does gpguizero do?_
 
-See **features** 
+See **features**
 
 
 _What hardware does it require?_
@@ -69,23 +69,31 @@ Interface with LEDs (Non PWM as of now) such as:
 
 Display Custom Text on SenseHat
 
+Display custom icon on SenseHat
+
+Define LED boards, as well as interact with them using buttons
+
+Picamera image capture
+
 A log to see which actions made by the user
 
 That is it for now!
 
 **Planned features -**
 
-SenseHAT custom images
+SenseHAT custom images - DONE!
 
-Buzzer interfacing
+Buzzer interfacing - To-do
 
-PiCamera interfacing
+PiCamera interfacing - DONE!
 
-LEDBoard functionality
+LEDBoard functionality - DONE!
 
-LEDBarGraph functionality
+LEDBarGraph functionality - Put on hold
 
-Full RGB LED functionality
+Full RGB LED functionality - Put on hold
+
+Put on hold indicates that the functionality may or may not be added, please request, if you want it to be added.
 
 
 **Interface images, for those interested**
