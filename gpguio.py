@@ -275,7 +275,7 @@ def ConfirmSenseHaticon():
                 filewrite.write("sensehat.set_pixels(icon)\n")
                 mled.clear()
                 SenseHatmatrixcustomiconwindow.hide()
-                Actionlog.append("SenseHat matrix will display custom icon\n")
+                Actionlog.append("SenseHat matrix will display custom icon")
             else:
                 pass
     else:
