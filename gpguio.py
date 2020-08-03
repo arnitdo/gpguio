@@ -97,9 +97,10 @@ def Buttoncontrolconfirmaction():
                 pass
         Buttoncontrolwindow.hide()
 def updateButtonname():
+    invalidbuttonpinlist = ["1", "2", "4", "17"]
     Buttonname = Buttonnamebox.value
     Buttonpinnumber = Buttonpinnumberbox.value
-    if Buttonnamebox.value != "" and Buttonpinnumberbox.value != "":
+    if Buttonnamebox.value != "" and Buttonpinnumberbox.value != "" and Buttonpinnumberbox.value not in invalidbuttonpinlist:
         Buttoncontrolbuttonselect.append(str(Buttonname))
         Buttonnamebox.clear()
         Buttonpinnumberbox.clear()
@@ -118,7 +119,8 @@ def LEDwindowexit():
     LEDwindow.hide()
 
 def updateLEDname():
-    if LEDnamebox.value != "" and (LEDpinnumberbox.value != "" and int(LEDpinnumberbox.value) > 0 and int(LEDpinnumberbox.value) < 41):
+    invalidledpinlist = ["1", "2", "4", "17"]
+    if LEDnamebox.value != "" and (LEDpinnumberbox.value != "" and int(LEDpinnumberbox.value) > 0 and int(LEDpinnumberbox.value) < 41) and LEDpinnumberbox.value not in invalidledpinlist:
         LEDpowerselect.append(str(LEDnamebox.value))
         ButtoncontrolLEDselect.append(str(LEDnamebox.value))
         LEDBoardselect.append(str(LEDpinnumberbox.value))
@@ -135,7 +137,8 @@ def PWMLEDwindowexit():
     PWMLEDwindow.hide()
 
 def updatePWMLEDname():
-    if PWMLEDnamebox.value != "" and (PWMLEDpinnumberbox.value != "" and int(PWMLEDpinnumberbox.value) < 41 and int(PWMLEDpinnumberbox.value) > 0):
+    invalidpwmledpinlist = ["1", "2", "4", "17"]
+    if PWMLEDnamebox.value != "" and (PWMLEDpinnumberbox.value != "" and int(PWMLEDpinnumberbox.value) < 41 and int(PWMLEDpinnumberbox.value) > 0) and PWMLEDpinnumberbox.value not in invalidpwmledpinlist:
         PWMLEDpowerselect.append(str(PWMLEDnamebox.value))
         filewrite.write(str(PWMLEDnamebox.value) + " = PWMLED(" + str(PWMLEDpinnumberbox.value) + ")\n")
         Actionlog.append("Added PWMLED with name " + str(PWMLEDnamebox.value) + " at GPIO pin " + str(PWMLEDpinnumberbox.value))
