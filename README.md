@@ -1,5 +1,7 @@
 **Please send feedback in the Feedback and Discussion thread, under issues tab**
 
+**Release 1.2.1 may be the final release of gpguio. If any additional functionality is absolutely needed, please contact me.**
+
 **How-to-run:**
 
 Download the gpguio.py file from the repo or from the release file
@@ -83,7 +85,7 @@ That is it for now!
 
 SenseHAT custom images - DONE!
 
-Buzzer interfacing - To-do
+Buzzer interfacing - Put on hold
 
 PiCamera interfacing - DONE!
 
