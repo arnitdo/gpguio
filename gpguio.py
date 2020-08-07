@@ -1,15 +1,10 @@
 import guizero
 import sys
 import time
+import os
+os.system("cat script.py > script_backup.py")
 filewrite = open("script.py", "w")
-filewrite.write("import time\n")
-filewrite.write("from gpiozero import *\n") #Not pep8 compliant. alternatively can add gpiozero.<component> = <componenttype>(<pinnumber>)
-#But I feel that importing * is better  due to large amounts of component functions that are going to be added later
-filewrite.write("from sense_hat import SenseHat\n")
-filewrite.write("from picamera import PiCamera\n")
-filewrite.write("from signal import pause\n")
-filewrite.write("sensehat = SenseHat()\n")
-filewrite.write("camera = PiCamera()\n")
+
 
 #windows
 mainwindow = guizero.App(title = "gpguio by arnitdo", width = 720, height = 540)
@@ -58,19 +53,34 @@ exitappwindow.hide()
 exitappwindow.disable()
 
 #Function definitions are in no particular order
+def Exitapp():
+	mainwindow.destroy()
+	filewrite.write("pause()\n")
+	filewrite.close()
+	sys.exit()
+
 def exitapppopup():
     exitappwindow.show()
 
-def Fileappendcolors():
-    filewrite.write("V = [148, 0, 211]\n")
-    filewrite.write("I = [75, 0 , 130]\n")
-    filewrite.write("B = [0, 0, 255]\n")
-    filewrite.write("G = [0, 255, 0]\n")
-    filewrite.write("Y = [255, 255, 0]\n")
-    filewrite.write("O = [255, 127, 0]\n")
-    filewrite.write("R = [255, 0, 0]\n")
-    filewrite.write("W = [255, 255, 255]\n")
-    filewrite.write("K = [0, 0, 0]\n")
+def Fileappendconfig():
+	filewrite.write("import time\n")
+	filewrite.write("from gpiozero import *\n") #Not pep8 compliant. alternatively can add gpiozero.<component> = <componenttype>(<pinnumber>)
+	#But I feel that importing * is better  due to large amounts of component functions that are going to be added later
+	#Welp that last line is false. This project is now idling
+	filewrite.write("from sense_hat import SenseHat\n")
+	filewrite.write("from picamera import PiCamera\n")
+	filewrite.write("from signal import pause\n")
+	filewrite.write("sensehat = SenseHat()\n")
+	filewrite.write("camera = PiCamera()\n")
+	filewrite.write("V = [148, 0, 211]\n")
+	filewrite.write("I = [75, 0 , 130]\n")
+	filewrite.write("B = [0, 0, 255]\n")
+	filewrite.write("G = [0, 255, 0]\n")
+	filewrite.write("Y = [255, 255, 0]\n")
+	filewrite.write("O = [255, 127, 0]\n")
+	filewrite.write("R = [255, 0, 0]\n")
+	filewrite.write("W = [255, 255, 255]\n")
+	filewrite.write("K = [0, 0, 0]\n")
 
 def Buttoncontrolconfirmaction():
     #This is going to be big...turns out not!
@@ -207,7 +217,7 @@ def Disclaimeraccept():
     SenseHatmatrixcustomtextwindow.enable()
     SenseHatmatrixcustomiconwindow.enable()
     Picamerawindow.enable()
-    Fileappendcolors()
+    Fileappendconfig()
 
 def Vflipsensematrix():
     filewrite.write("sensehat.flip_v()\n")
@@ -433,7 +443,7 @@ Picamerawindowfilebox = guizero.TextBox(Picamerawindow, text = "capture.jpg", wi
 
 #Exit app popup
 exitappwindowtext = guizero.Text(exitappwindow, text = "Thank you for using gpguio\nFile saved as script.py")
-exitappconfirm = guizero.PushButton(exitappwindow, command = mainwindow.destroy, text = "OK", align = "bottom", padx = 20)
+exitappconfirm = guizero.PushButton(exitappwindow, command = Exitapp, text = "OK", align = "bottom", padx = 20)
 
 #SenseHatmatrixcustomiconwindowboxes
 blanktextforcentering = guizero.Text(SenseHatmatrixcustomiconwindow, text = "                                   ", grid = [0,0,1,10])#Because the mled matrix is offset to the left, this should bring it to center
@@ -512,6 +522,3 @@ SenseHatmatrixcustomiconconfirmbutton = guizero.PushButton(SenseHatmatrixcustomi
 #End of file
 
 mainwindow.display()
-filewrite.write("pause()\n")
-filewrite.close()
-sys.exit()
