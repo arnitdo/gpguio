@@ -60,7 +60,7 @@ def Exitapp():
 	sys.exit()
 
 def exitapppopup():
-    exitappwindow.show()
+	exitappwindow.show()
 
 def Fileappendconfig():
 	filewrite.write("import time\n")
@@ -83,243 +83,244 @@ def Fileappendconfig():
 	filewrite.write("K = [0, 0, 0]\n")
 
 def Buttoncontrolconfirmaction():
-    #This is going to be big...turns out not!
-    if Buttoncontrolbuttonselect.value == None or Buttoncontrolbuttonactionselect.value ==None or ButtoncontrolLEDselect.value == None or ButtoncontrolLEDactionselect.value == None:
-        Nobuttonselecttext = guizero.Text(Buttoncontrolwindow, text = "No selection made. Try again")
-    else:
-        if Buttoncontrolbuttonactionselect.value == "when pressed":
-            if ButtoncontrolLEDactionselect.value == "Turn ON":
-                filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_pressed = " + str(ButtoncontrolLEDselect.value) + ".on()\n")
-                Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn ON when button " + str(Buttoncontrolbuttonselect.value) + " is pressed")
-            elif ButtoncontrolLEDactionselect.value == "Turn OFF":
-                filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_pressed = " + str(ButtoncontrolLEDselect.value) + ".off()\n")
-                Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn OFF when button " + str(Buttoncontrolbuttonselect.value) + " is pressed")
-            else:
-                pass
-        elif Buttoncontrolbuttonactionselect.value == "when released":
-            if ButtoncontrolLEDactionselect.value == "Turn ON":
-                filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_released = " + str(ButtoncontrolLEDselect.value) + ".on()\n")
-                Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn ON when button " + str(Buttoncontrolbuttonselect.value) + " is released")
-            elif ButtoncontrolLEDactionselect.value == "Turn OFF":
-                filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_released = " + str(ButtoncontrolLEDselect.value) + ".off()\n")
-                Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn OFF when button " + str(Buttoncontrolbuttonselect.value) + " is released")
-            else:
-                pass
-        Buttoncontrolwindow.hide()
+	#This is going to be big...turns out not!
+	if Buttoncontrolbuttonselect.value == None or Buttoncontrolbuttonactionselect.value ==None or ButtoncontrolLEDselect.value == None or ButtoncontrolLEDactionselect.value == None:
+		Nobuttonselecttext = guizero.Text(Buttoncontrolwindow, text = "No selection made. Try again")
+	else:
+		if Buttoncontrolbuttonactionselect.value == "when pressed":
+			if ButtoncontrolLEDactionselect.value == "Turn ON":
+				filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_pressed = " + str(ButtoncontrolLEDselect.value) + ".on()\n")
+				Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn ON when button " + str(Buttoncontrolbuttonselect.value) + " is pressed")
+			elif ButtoncontrolLEDactionselect.value == "Turn OFF":
+				filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_pressed = " + str(ButtoncontrolLEDselect.value) + ".off()\n")
+				Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn OFF when button " + str(Buttoncontrolbuttonselect.value) + " is pressed")
+			else:
+				pass
+		elif Buttoncontrolbuttonactionselect.value == "when released":
+			if ButtoncontrolLEDactionselect.value == "Turn ON":
+				filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_released = " + str(ButtoncontrolLEDselect.value) + ".on()\n")
+				Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn ON when button " + str(Buttoncontrolbuttonselect.value) + " is released")
+			elif ButtoncontrolLEDactionselect.value == "Turn OFF":
+				filewrite.write(str(Buttoncontrolbuttonselect.value) + ".when_released = " + str(ButtoncontrolLEDselect.value) + ".off()\n")
+				Actionlog.append("LED " + str(ButtoncontrolLEDselect.value) + " will turn OFF when button " + str(Buttoncontrolbuttonselect.value) + " is released")
+			else:
+				pass
+		Buttoncontrolwindow.hide()
 def updateButtonname():
-    invalidbuttonpinlist = ["1", "2", "4", "17"]
-    Buttonname = Buttonnamebox.value
-    Buttonpinnumber = Buttonpinnumberbox.value
-    if Buttonnamebox.value != "" and Buttonpinnumberbox.value != "" and Buttonpinnumberbox.value not in invalidbuttonpinlist:
-        Buttoncontrolbuttonselect.append(str(Buttonname))
-        Buttonnamebox.clear()
-        Buttonpinnumberbox.clear()
-        Buttonwindow.hide()
-        Actionlog.append("Added Button with name " + str(Buttonname) + " at GPIO pin " + str(Buttonpinnumber))
-    else:
-        NoButtonwarntext = guizero.Text(Buttonwindow, text = "Invalid input", align = "top")
+	invalidbuttonpinlist = ["1", "2", "4", "17"]
+	Buttonname = Buttonnamebox.value
+	Buttonpinnumber = Buttonpinnumberbox.value
+	if Buttonnamebox.value != "" and Buttonpinnumberbox.value != "" and Buttonpinnumberbox.value not in invalidbuttonpinlist:
+		Buttoncontrolbuttonselect.append(str(Buttonname))
+		filewrite.write( str(Buttonname) + " = Button(" + str(Buttonpinnumber) + ")\n")
+		Buttonnamebox.clear()
+		Buttonpinnumberbox.clear()
+		Buttonwindow.hide()
+		Actionlog.append("Added Button with name " + str(Buttonname) + " at GPIO pin " + str(Buttonpinnumber))
+	else:
+		NoButtonwarntext = guizero.Text(Buttonwindow, text = "Invalid input", align = "top")
 def Buttonwindowexit():
-    Buttonnamebox.clear()
-    Buttonpinnumberbox.clear()
-    Buttonwindow.hide()
+	Buttonnamebox.clear()
+	Buttonpinnumberbox.clear()
+	Buttonwindow.hide()
 
 def LEDwindowexit():
-    LEDnamebox.clear()
-    LEDpinnumberbox.clear()
-    LEDwindow.hide()
+	LEDnamebox.clear()
+	LEDpinnumberbox.clear()
+	LEDwindow.hide()
 
 def updateLEDname():
-    invalidledpinlist = ["1", "2", "4", "17"]
-    if LEDnamebox.value != "" and (LEDpinnumberbox.value != "" and int(LEDpinnumberbox.value) > 0 and int(LEDpinnumberbox.value) < 41) and LEDpinnumberbox.value not in invalidledpinlist:
-        LEDpowerselect.append(str(LEDnamebox.value))
-        ButtoncontrolLEDselect.append(str(LEDnamebox.value))
-        LEDBoardselect.append(str(LEDpinnumberbox.value))
-        filewrite.write(str(LEDnamebox.value) + " = LED(" + str(LEDpinnumberbox.value) + ")\n")
-        Actionlog.append("Added LED with name " + str(LEDnamebox.value) + " at GPIO pin " + str(LEDpinnumberbox.value))
-        LEDnamebox.clear()
-        LEDpinnumberbox.clear()
-        LEDwindow.hide()
-    else:
-        NoLEDwarntext = guizero.Text(LEDwindow, text = "Invalid input", align = "top")
+	invalidledpinlist = ["1", "2", "4", "17"]
+	if LEDnamebox.value != "" and (LEDpinnumberbox.value != "" and int(LEDpinnumberbox.value) > 0 and int(LEDpinnumberbox.value) < 41) and LEDpinnumberbox.value not in invalidledpinlist:
+		LEDpowerselect.append(str(LEDnamebox.value))
+		ButtoncontrolLEDselect.append(str(LEDnamebox.value))
+		LEDBoardselect.append(str(LEDpinnumberbox.value))
+		filewrite.write(str(LEDnamebox.value) + " = LED(" + str(LEDpinnumberbox.value) + ")\n")
+		Actionlog.append("Added LED with name " + str(LEDnamebox.value) + " at GPIO pin " + str(LEDpinnumberbox.value))
+		LEDnamebox.clear()
+		LEDpinnumberbox.clear()
+		LEDwindow.hide()
+	else:
+		NoLEDwarntext = guizero.Text(LEDwindow, text = "Invalid input", align = "top")
 def PWMLEDwindowexit():
-    PWMLEDnamebox.clear()
-    PWMLEDpinnumberbox.clear()
-    PWMLEDwindow.hide()
+	PWMLEDnamebox.clear()
+	PWMLEDpinnumberbox.clear()
+	PWMLEDwindow.hide()
 
 def updatePWMLEDname():
-    invalidpwmledpinlist = ["1", "2", "4", "17"]
-    if PWMLEDnamebox.value != "" and (PWMLEDpinnumberbox.value != "" and int(PWMLEDpinnumberbox.value) < 41 and int(PWMLEDpinnumberbox.value) > 0) and PWMLEDpinnumberbox.value not in invalidpwmledpinlist:
-        PWMLEDpowerselect.append(str(PWMLEDnamebox.value))
-        filewrite.write(str(PWMLEDnamebox.value) + " = PWMLED(" + str(PWMLEDpinnumberbox.value) + ")\n")
-        Actionlog.append("Added PWMLED with name " + str(PWMLEDnamebox.value) + " at GPIO pin " + str(PWMLEDpinnumberbox.value))
-        PWMLEDnamebox.clear()
-        PWMLEDpinnumberbox.clear()
-        PWMLEDwindow.hide()
-    else:
-        NoPWMLEDwarntext = guizero.Text(PWMLEDwindow, text = "Invalid input", align = "top")
+	invalidpwmledpinlist = ["1", "2", "4", "17"]
+	if PWMLEDnamebox.value != "" and (PWMLEDpinnumberbox.value != "" and int(PWMLEDpinnumberbox.value) < 41 and int(PWMLEDpinnumberbox.value) > 0) and PWMLEDpinnumberbox.value not in invalidpwmledpinlist:
+		PWMLEDpowerselect.append(str(PWMLEDnamebox.value))
+		filewrite.write(str(PWMLEDnamebox.value) + " = PWMLED(" + str(PWMLEDpinnumberbox.value) + ")\n")
+		Actionlog.append("Added PWMLED with name " + str(PWMLEDnamebox.value) + " at GPIO pin " + str(PWMLEDpinnumberbox.value))
+		PWMLEDnamebox.clear()
+		PWMLEDpinnumberbox.clear()
+		PWMLEDwindow.hide()
+	else:
+		NoPWMLEDwarntext = guizero.Text(PWMLEDwindow, text = "Invalid input", align = "top")
 def PWMLEDcontrolbrightness():
-    if ((PWMLEDpowerselect.value !=None ) and (PWMbrightinputbox.value != "")):
-        PWMbrightinput = float(PWMbrightinputbox.value)
-        filewrite.write(str(PWMLEDpowerselect.value) + ".value = " + str(PWMbrightinput) + "\ntime.sleep(10)\n" + str(PWMLEDpowerselect.value) + ".value = 0")
-        #10 second brightness timer. Can be changed by user
-        Actionlog.append("PWMLED " + str(PWMLEDpowerselect.value) + " brightness set to " + str(PWMbrightinput))
-        PWMLEDcontrolwindow.hide()
-    elif PWMLEDpowerselect.value == None:
-        NoLEDselect = guizero.Text(PWMLEDcontrolwindow, text = "Invalid selection", align = "top")
-    else:
-        pass
+	if ((PWMLEDpowerselect.value !=None ) and (PWMbrightinputbox.value != "")):
+		PWMbrightinput = float(PWMbrightinputbox.value)
+		filewrite.write(str(PWMLEDpowerselect.value) + ".value = " + str(PWMbrightinput) + "\ntime.sleep(10)\n" + str(PWMLEDpowerselect.value) + ".value = 0")
+		#10 second brightness timer. Can be changed by user
+		Actionlog.append("PWMLED " + str(PWMLEDpowerselect.value) + " brightness set to " + str(PWMbrightinput))
+		PWMLEDcontrolwindow.hide()
+	elif PWMLEDpowerselect.value == None:
+		NoLEDselect = guizero.Text(PWMLEDcontrolwindow, text = "Invalid selection", align = "top")
+	else:
+		pass
 def updateSleeptime():
-    if Sleeptimebox.value != "":
-        Sleeptime = Sleeptimebox.value
-        filewrite.write("time.sleep(" + str(Sleeptime) + ")\n" )
-        Sleeptimebox.clear()
-        Sleepwindow.hide()
-        Morecomponentswindow.hide()
-        Actionlog.append("Added sleep timer for "+ str(Sleeptime) + " seconds")
-    else:
-        NoSleepinputtext = guizero.Text(Sleepwindow, text = "Invalid input")
+	if Sleeptimebox.value != "":
+		Sleeptime = Sleeptimebox.value
+		filewrite.write("time.sleep(" + str(Sleeptime) + ")\n" )
+		Sleeptimebox.clear()
+		Sleepwindow.hide()
+		Morecomponentswindow.hide()
+		Actionlog.append("Added sleep timer for "+ str(Sleeptime) + " seconds")
+	else:
+		NoSleepinputtext = guizero.Text(Sleepwindow, text = "Invalid input")
 def Sleeptimeexit():
-    Sleeptimebox.clear()
-    Sleepwindow.hide()
+	Sleeptimebox.clear()
+	Sleepwindow.hide()
 
 def LEDpowerON():
-    if LEDpowerselect.value != None:
-        filewrite.write(str(LEDpowerselect.value) + ".on()\n")
-        LEDcontrolwindow.hide()
-    else:
-        pass
-    if LEDpowerselect.value == None:
-        NoLEDselect = guizero.Text(LEDcontrolwindow, text = "Invalid selection", align = "top")
-    else:
-        Actionlog.append("LED " + str(LEDpowerselect.value) + " will turn ON")
+	if LEDpowerselect.value != None:
+		filewrite.write(str(LEDpowerselect.value) + ".on()\n")
+		LEDcontrolwindow.hide()
+	else:
+		pass
+	if LEDpowerselect.value == None:
+		NoLEDselect = guizero.Text(LEDcontrolwindow, text = "Invalid selection", align = "top")
+	else:
+		Actionlog.append("LED " + str(LEDpowerselect.value) + " will turn ON")
 
 def LEDpowerOFF():
-    if LEDpowerselect.value != None:
-        filewrite.write(str(LEDpowerselect.value) + ".off()\n")
-        LEDcontrolwindow.hide()
-        Actionlog.append("LED " + str(LEDpowerselect.value) + " will turn OFF")
-    else:
-        NoLEDselect = guizero.Text(LEDcontrolwindow, text = "Invalid selection", align = "top")
+	if LEDpowerselect.value != None:
+		filewrite.write(str(LEDpowerselect.value) + ".off()\n")
+		LEDcontrolwindow.hide()
+		Actionlog.append("LED " + str(LEDpowerselect.value) + " will turn OFF")
+	else:
+		NoLEDselect = guizero.Text(LEDcontrolwindow, text = "Invalid selection", align = "top")
 
 def Disclaimeraccept():
-    Disclaimerwindow.destroy()
-    mainwindow.enable()
-    mainwindow.show()
-    LEDwindow.enable()
-    PWMLEDwindow.enable()
-    LEDcontrolwindow.enable()
-    PWMLEDcontrolwindow.enable()
-    Sleepwindow.enable()
-    Buttonwindow.enable()
-    Buttoncontrolwindow.enable()
-    exitappwindow.enable()
-    Morecomponentswindow.enable()
-    SenseHatmatrixcustomtextwindow.enable()
-    SenseHatmatrixcustomiconwindow.enable()
-    Picamerawindow.enable()
-    Fileappendconfig()
+	Disclaimerwindow.destroy()
+	mainwindow.enable()
+	mainwindow.show()
+	LEDwindow.enable()
+	PWMLEDwindow.enable()
+	LEDcontrolwindow.enable()
+	PWMLEDcontrolwindow.enable()
+	Sleepwindow.enable()
+	Buttonwindow.enable()
+	Buttoncontrolwindow.enable()
+	exitappwindow.enable()
+	Morecomponentswindow.enable()
+	SenseHatmatrixcustomtextwindow.enable()
+	SenseHatmatrixcustomiconwindow.enable()
+	Picamerawindow.enable()
+	Fileappendconfig()
 
 def Vflipsensematrix():
-    filewrite.write("sensehat.flip_v()\n")
-    Actionlog.append("SenseHat matrix display flipped vertically")
-    Sensematrixvflippedtext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "SenseHat matrix display flipped vertically")
+	filewrite.write("sensehat.flip_v()\n")
+	Actionlog.append("SenseHat matrix display flipped vertically")
+	Sensematrixvflippedtext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "SenseHat matrix display flipped vertically")
 
 def Hflipsensematrix():
-    filewrite.write("sensehat.flip_h()\n")
-    Actionlog.append("SenseHat matrix display flipped horizontally")
-    Sensematrixhflippedtext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "SenseHat matrix display flipped horizontally")
+	filewrite.write("sensehat.flip_h()\n")
+	Actionlog.append("SenseHat matrix display flipped horizontally")
+	Sensematrixhflippedtext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "SenseHat matrix display flipped horizontally")
 
 
 def Picameraconfirmcapture():
-    if Picamerawindowfilebox.value != "":
-        filewrite.write("time.sleep(5) # Camera warm up time, is necessary\ncamera.capture(\"" + str(Picamerawindowfilebox.value) + "\")\n")
-        Actionlog.append("PiCamera will capture image " + str(Picamerawindowfilebox.value))
-        Picamerawindowfilebox.clear()
-        Picamerawindow.hide()
-        Morecomponentswindow.hide()
-    else:
-        Invalidimagename = guizero.Text(Picamerawindow, text = "Invalid Input", align = "bottom")
-        Picamerawindowfilebox.clear()
+	if Picamerawindowfilebox.value != "":
+		filewrite.write("time.sleep(5) # Camera warm up time, is necessary\ncamera.capture(\"" + str(Picamerawindowfilebox.value) + "\")\n")
+		Actionlog.append("PiCamera will capture image " + str(Picamerawindowfilebox.value))
+		Picamerawindowfilebox.clear()
+		Picamerawindow.hide()
+		Morecomponentswindow.hide()
+	else:
+		Invalidimagename = guizero.Text(Picamerawindow, text = "Invalid Input", align = "bottom")
+		Picamerawindowfilebox.clear()
 
 def Picameracancelcapture():
-    Picamerawindowfilebox.clear()
-    Picamerawindow.hide()
+	Picamerawindowfilebox.clear()
+	Picamerawindow.hide()
 
 def CancelSenseHattext():
-    SenseHatmatrixcustomtextbox.clear()
-    SenseHatmatrixcustomtextsenserotationbox.clear()
-    SenseHatmatrixcustomtextwindow.hide()
-    Morecomponentswindow.hide()
+	SenseHatmatrixcustomtextbox.clear()
+	SenseHatmatrixcustomtextsenserotationbox.clear()
+	SenseHatmatrixcustomtextwindow.hide()
+	Morecomponentswindow.hide()
 
 def ConfirmSenseHattext():
-    validrotationlist = ["0","90","180","270"]
-    if SenseHatmatrixcustomtextbox.value != "" and SenseHatmatrixcustomtextsenserotationbox.value in validrotationlist:
-        filewrite.write("sensehat.set_rotation(" + str(SenseHatmatrixcustomtextsenserotationbox.value) + ")\n")
-        filewrite.write("sensehat.show_message(\""+ str(SenseHatmatrixcustomtextbox.value) + "\")\n")
-        Actionlog.append("SenseHat will be rotated " + str(SenseHatmatrixcustomtextsenserotationbox.value) + " degrees")
-        Actionlog.append("SenseHat will display text " + str(SenseHatmatrixcustomtextbox.value))
-        SenseHatmatrixcustomtextwindow.hide()
-        SenseHatmatrixcustomtextbox.clear()
-        Morecomponentswindow.hide()
-    else:
-        Invalidcustomtextinputtext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "Invalid Input")
+	validrotationlist = ["0","90","180","270"]
+	if SenseHatmatrixcustomtextbox.value != "" and SenseHatmatrixcustomtextsenserotationbox.value in validrotationlist:
+		filewrite.write("sensehat.set_rotation(" + str(SenseHatmatrixcustomtextsenserotationbox.value) + ")\n")
+		filewrite.write("sensehat.show_message(\""+ str(SenseHatmatrixcustomtextbox.value) + "\")\n")
+		Actionlog.append("SenseHat will be rotated " + str(SenseHatmatrixcustomtextsenserotationbox.value) + " degrees")
+		Actionlog.append("SenseHat will display text " + str(SenseHatmatrixcustomtextbox.value))
+		SenseHatmatrixcustomtextwindow.hide()
+		SenseHatmatrixcustomtextbox.clear()
+		Morecomponentswindow.hide()
+	else:
+		Invalidcustomtextinputtext = guizero.Text(SenseHatmatrixcustomtextwindow, text = "Invalid Input")
 
 def CancelSenseHaticon():
-    for mled in SenseHarmatrixmledlist:
-        mled.clear()
-    SenseHatmatrixcustomiconwindow.hide()
+	for mled in SenseHarmatrixmledlist:
+		mled.clear()
+	SenseHatmatrixcustomiconwindow.hide()
 
 def ConfirmSenseHaticon():
-    mledscanner = 0
-    for mled in SenseHarmatrixmledlist:
-        if mled.value in SenseHatmatrixcustomiconvalidinputslist:
-            mledscanner = mledscanner + 1
-            if mledscanner == 64:
-                filewrite.write("icon = [\n")
-                filewrite.write("   " + str(mled1x1.value) + ", " + str(mled2x1.value) + ", " + str(mled3x1.value) + ", " + str(mled4x1.value) + ", " + str(mled5x1.value) + ", " + str(mled6x1.value) + ", " + str(mled7x1.value) + ", " + str(mled8x1.value) + ", \n")
-                filewrite.write("   " + str(mled1x2.value) + ", " + str(mled2x2.value) + ", " + str(mled3x2.value) + ", " + str(mled4x2.value) + ", " + str(mled5x2.value) + ", " + str(mled6x2.value) + ", " + str(mled7x2.value) + ", " + str(mled8x2.value) + ", \n")
-                filewrite.write("   " + str(mled1x3.value) + ", " + str(mled2x3.value) + ", " + str(mled3x3.value) + ", " + str(mled4x3.value) + ", " + str(mled5x3.value) + ", " + str(mled6x3.value) + ", " + str(mled7x3.value) + ", " + str(mled8x3.value) + ", \n")
-                filewrite.write("   " + str(mled1x4.value) + ", " + str(mled2x4.value) + ", " + str(mled3x4.value) + ", " + str(mled4x4.value) + ", " + str(mled5x4.value) + ", " + str(mled6x4.value) + ", " + str(mled7x4.value) + ", " + str(mled8x4.value) + ", \n")
-                filewrite.write("   " + str(mled1x5.value) + ", " + str(mled2x5.value) + ", " + str(mled3x5.value) + ", " + str(mled4x5.value) + ", " + str(mled5x5.value) + ", " + str(mled6x5.value) + ", " + str(mled7x5.value) + ", " + str(mled8x5.value) + ", \n")
-                filewrite.write("   " + str(mled1x6.value) + ", " + str(mled2x6.value) + ", " + str(mled3x6.value) + ", " + str(mled4x6.value) + ", " + str(mled5x6.value) + ", " + str(mled6x6.value) + ", " + str(mled7x6.value) + ", " + str(mled8x6.value) + ", \n")
-                filewrite.write("   " + str(mled1x7.value) + ", " + str(mled2x7.value) + ", " + str(mled3x7.value) + ", " + str(mled4x7.value) + ", " + str(mled5x7.value) + ", " + str(mled6x7.value) + ", " + str(mled7x7.value) + ", " + str(mled8x7.value) + ", \n")
-                filewrite.write("   " + str(mled1x8.value) + ", " + str(mled2x8.value) + ", " + str(mled3x8.value) + ", " + str(mled4x8.value) + ", " + str(mled5x8.value) + ", " + str(mled6x8.value) + ", " + str(mled7x8.value) + ", " + str(mled8x8.value) + "\n")
-                filewrite.write("]\n\n")#Double \n for making it pretty!!
-                filewrite.write("sensehat.set_pixels(icon)\n")
-                mled.clear()
-                SenseHatmatrixcustomiconwindow.hide()
-                Actionlog.append("SenseHat matrix will display custom icon")
-            else:
-                pass
-    else:
-        Invalidiconinputtext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "Invalid Input", grid = [10,12], align = "bottom")
+	mledscanner = 0
+	for mled in SenseHarmatrixmledlist:
+		if mled.value in SenseHatmatrixcustomiconvalidinputslist:
+			mledscanner = mledscanner + 1
+			if mledscanner == 64:
+				filewrite.write("icon = [\n")
+				filewrite.write("   " + str(mled1x1.value) + ", " + str(mled2x1.value) + ", " + str(mled3x1.value) + ", " + str(mled4x1.value) + ", " + str(mled5x1.value) + ", " + str(mled6x1.value) + ", " + str(mled7x1.value) + ", " + str(mled8x1.value) + ", \n")
+				filewrite.write("   " + str(mled1x2.value) + ", " + str(mled2x2.value) + ", " + str(mled3x2.value) + ", " + str(mled4x2.value) + ", " + str(mled5x2.value) + ", " + str(mled6x2.value) + ", " + str(mled7x2.value) + ", " + str(mled8x2.value) + ", \n")
+				filewrite.write("   " + str(mled1x3.value) + ", " + str(mled2x3.value) + ", " + str(mled3x3.value) + ", " + str(mled4x3.value) + ", " + str(mled5x3.value) + ", " + str(mled6x3.value) + ", " + str(mled7x3.value) + ", " + str(mled8x3.value) + ", \n")
+				filewrite.write("   " + str(mled1x4.value) + ", " + str(mled2x4.value) + ", " + str(mled3x4.value) + ", " + str(mled4x4.value) + ", " + str(mled5x4.value) + ", " + str(mled6x4.value) + ", " + str(mled7x4.value) + ", " + str(mled8x4.value) + ", \n")
+				filewrite.write("   " + str(mled1x5.value) + ", " + str(mled2x5.value) + ", " + str(mled3x5.value) + ", " + str(mled4x5.value) + ", " + str(mled5x5.value) + ", " + str(mled6x5.value) + ", " + str(mled7x5.value) + ", " + str(mled8x5.value) + ", \n")
+				filewrite.write("   " + str(mled1x6.value) + ", " + str(mled2x6.value) + ", " + str(mled3x6.value) + ", " + str(mled4x6.value) + ", " + str(mled5x6.value) + ", " + str(mled6x6.value) + ", " + str(mled7x6.value) + ", " + str(mled8x6.value) + ", \n")
+				filewrite.write("   " + str(mled1x7.value) + ", " + str(mled2x7.value) + ", " + str(mled3x7.value) + ", " + str(mled4x7.value) + ", " + str(mled5x7.value) + ", " + str(mled6x7.value) + ", " + str(mled7x7.value) + ", " + str(mled8x7.value) + ", \n")
+				filewrite.write("   " + str(mled1x8.value) + ", " + str(mled2x8.value) + ", " + str(mled3x8.value) + ", " + str(mled4x8.value) + ", " + str(mled5x8.value) + ", " + str(mled6x8.value) + ", " + str(mled7x8.value) + ", " + str(mled8x8.value) + "\n")
+				filewrite.write("]\n\n")#Double \n for making it pretty!!
+				filewrite.write("sensehat.set_pixels(icon)\n")
+				mled.clear()
+				SenseHatmatrixcustomiconwindow.hide()
+				Actionlog.append("SenseHat matrix will display custom icon")
+			else:
+				pass
+	else:
+		Invalidiconinputtext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "Invalid Input", grid = [10,12], align = "bottom")
 
 def LEDBoardexit():
-    LEDBoardwindow.hide()
-    LEDBoardnamebox.clear()
+	LEDBoardwindow.hide()
+	LEDBoardnamebox.clear()
 
 def updateLEDBoard():
-    if LEDBoardnamebox.value != "" and LEDBoardselect.value != None:
-        ledstring = "" #Sets the led string to "". each led pin is added to the string
-        for traverser in LEDBoardselect.value[0 : -1]:
-            ledstring = ledstring + traverser + ", "
-        ledstring = ledstring + LEDBoardselect.value[-1]
-        filewrite.write(str(LEDBoardnamebox.value) + " = LEDBoard(" + ledstring + ")\n") #the string of LED pins is added to the file after LEDBoard = (
-        Actionlog.append("Created LEDBoard with LEDs at pins " + str(LEDBoardselect.value))
-        ButtoncontrolLEDselect.append(str(LEDBoardnamebox.value))
-        LEDpowerselect.append(str(LEDBoardnamebox.value))
-        LEDBoardnamebox.clear()
-        LEDBoardwindow.hide()
-    else:
-        InvalidLEDBoardtext = guizero.Text(LEDBoardwindow, text = "Invalid Input", align = "bottom")
+	if LEDBoardnamebox.value != "" and LEDBoardselect.value != None:
+		ledstring = "" #Sets the led string to "". each led pin is added to the string
+		for traverser in LEDBoardselect.value[0 : -1]:
+			ledstring = ledstring + traverser + ", "
+		ledstring = ledstring + LEDBoardselect.value[-1]
+		filewrite.write(str(LEDBoardnamebox.value) + " = LEDBoard(" + ledstring + ")\n") #the string of LED pins is added to the file after LEDBoard = (
+		Actionlog.append("Created LEDBoard with LEDs at pins " + str(LEDBoardselect.value))
+		ButtoncontrolLEDselect.append(str(LEDBoardnamebox.value))
+		LEDpowerselect.append(str(LEDBoardnamebox.value))
+		LEDBoardnamebox.clear()
+		LEDBoardwindow.hide()
+	else:
+		InvalidLEDBoardtext = guizero.Text(LEDBoardwindow, text = "Invalid Input", align = "bottom")
 
 def LEDBoardexit():
-    LEDBoardnamebox.clear()
-    LEDBoardwindow.hide()
+	LEDBoardnamebox.clear()
+	LEDBoardwindow.hide()
 
 def Disclaimerdecline():
-    Disclaimerwindow.destroy()
-    mainwindow.destroy()
+	Disclaimerwindow.destroy()
+	mainwindow.destroy()
 
 #All widgets based on window
 
@@ -333,7 +334,7 @@ Disclaimertext3 = guizero.Text(Disclaimerwindow, text = "Program made by arnitdo
 #Buttonwindow
 Buttonnametext = guizero.Text(Buttonwindow, text = "\nName of new Button")
 Buttonnamebox = guizero.TextBox(Buttonwindow)
-Buttonpinnumbertext = guizero.Text(Buttonwindow, text = "\nPin to which button is connedted")
+Buttonpinnumbertext = guizero.Text(Buttonwindow, text = "\nNumber of GPIO Pin to which button is connedted")
 Buttonpinnumberbox = guizero.TextBox(Buttonwindow)
 Buttonselectexitbutton = guizero.PushButton(Buttonwindow, command = Buttonwindowexit, text = "Cancel", align = "bottom", padx = 14)
 Buttonnameconfirmbutton = guizero.PushButton(Buttonwindow, command = updateButtonname, text = "Confirm", align = "bottom")
@@ -425,13 +426,13 @@ Picamerawindowconfirmbutton = guizero.PushButton(Picamerawindow, command = Picam
 #LEDwindowboxes
 LEDnametext = guizero.Text(LEDwindow, text="\nLED name (can be anything reasonable)")
 LEDnamebox = guizero.TextBox(LEDwindow)
-LEDpinnumbertext = guizero.Text(LEDwindow, text = "\nPhysical pin number to which LED is connected.\nShould be any number from 1 to 40\nSee pinout.xyz for more info or\nrun command pinout on your raspberry pi")
+LEDpinnumbertext = guizero.Text(LEDwindow, text = "\nGPIO pin number to which LED is connected.\nShould be a valid pin\nSee pinout.xyz for more info or\nrun command pinout on your raspberry pi")
 LEDpinnumberbox = guizero.TextBox(LEDwindow)
 
 #PWMLEDwindowboxes
 PWMLEDnametext = guizero.Text(PWMLEDwindow, text="\nPWMLED name (can be anything reasonable)")
 PWMLEDnamebox = guizero.TextBox(PWMLEDwindow)
-PWMLEDpinnumbertext = guizero.Text(PWMLEDwindow, text = "\nPhysical pin number to which PWMLED is connected.\nShould be any number from 1 to 40\nSee pinout.xyz for more info or\nrun command pinout on your raspberry pi")
+PWMLEDpinnumbertext = guizero.Text(PWMLEDwindow, text = "\nGPIO pin number to which PWMLED is connected.\nShould be a valid pin\nSee pinout.xyz for more info or\nrun command pinout on your raspberry pi")
 PWMLEDpinnumberbox = guizero.TextBox(PWMLEDwindow)
 
 #Sleepwindowboxes
@@ -446,7 +447,7 @@ exitappwindowtext = guizero.Text(exitappwindow, text = "Thank you for using gpgu
 exitappconfirm = guizero.PushButton(exitappwindow, command = Exitapp, text = "OK", align = "bottom", padx = 20)
 
 #SenseHatmatrixcustomiconwindowboxes
-blanktextforcentering = guizero.Text(SenseHatmatrixcustomiconwindow, text = "                                   ", grid = [0,0,1,10])#Because the mled matrix is offset to the left, this should bring it to center
+blanktextforcentering = guizero.Text(SenseHatmatrixcustomiconwindow, text = "								   ", grid = [0,0,1,10])#Because the mled matrix is offset to the left, this should bring it to center
 SenseHatmatrixcustomiconwindowhelptext = guizero.Text(SenseHatmatrixcustomiconwindow, text = "\nInput colors to be displayed on matrix\nAvailable color selection :\nFor violet [148, 0, 211] input V\nFor indigo [75, 0, 130] input I\nFor blue [0, 0, 255] input B\nFor green [0, 255, 0] input G\nFor yellow [255, 255, 0] input Y\nFor orange [255, 127, 0] input O\nFor red [255,0,0] input R\nFor white [255, 255, 255] input W\nFor black (off) [0, 0, 0] input K\nNote that inputs are case sensitive\nThe values you input will reflect on the matrix\n", align = "top", grid = [1,0,8,1])
 SenseHatmatrixcustomiconvalidinputslist = ["V", "I", "B", "G", "Y", "O", "R", "W", "K"]
 #Is there any alternative to this ? If so, please recommend
